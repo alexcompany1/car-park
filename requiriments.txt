@@ -1,0 +1,11 @@
+Service --> web application http
+
+runtime --> Node.js
+
+Port --> 3000
+
+access --> local, vercel
+
+environmental variables --> local(node.js) + docker
+
+Endpoint --> /health
