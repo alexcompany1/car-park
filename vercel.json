@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/timeline",
-      "destination": "/timeline.html"
+      "destination": "/api/timeline"
     },
     {
       "source": "/timeline/",
-      "destination": "/timeline.html"
+      "destination": "/api/timeline"
     }
   ]
 }
