@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/timeline",
+      "destination": "/timeline.html"
+    },
+    {
+      "source": "/timeline/",
+      "destination": "/timeline.html"
+    }
+  ]
+}
