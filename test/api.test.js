@@ -20,7 +20,10 @@ test('API de Carpark y rutas existentes', async (t) => {
   assert.deepEqual(await missing.json(), { error: 'Ruta no encontrada' });
   const health = await fetch(base + '/health');
   assert.deepEqual(await health.json(), { status: 'ok' });
-  for (const route of ['/', '/timeline']) {
+  const home = await fetch(base + '/', { redirect: 'manual' });
+  assert.equal(home.status, 302);
+  assert.equal(home.headers.get('location'), '/api/sitios');
+  for (const route of ['/timeline']) {
     const page = await fetch(base + route);
     assert.equal(page.status, 200);
     assert.match(page.headers.get('content-type'), /text\/html/);

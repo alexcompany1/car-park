@@ -38,7 +38,8 @@ las actualizaciones MQTT quedan para próximas tareas.
 - `src/data/sitios.js`: contiene las plazas simuladas.
 - `api/sitios.js`: reutiliza la aplicación para la ruta de Vercel.
 
-Se conservan `/`, `/timeline` y `/health`.
+La página de inicio `/` redirige a `/api/sitios` para mostrar el JSON.
+Se conservan `/timeline` y `/health`.
 Las rutas desconocidas responden HTTP 404 en JSON.
 
 ## Verificar
