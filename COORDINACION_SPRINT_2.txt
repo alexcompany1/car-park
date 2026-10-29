@@ -11,12 +11,12 @@ ya esten conectados.
 
 QUE ESTA HECHO
 - Servidor Node.js con Express.
-- GET /api/sitios devuelve dos plazas simuladas: una libre y otra ocupada.
+- GET /api/sitios consulta public.plazas en Supabase (20 plazas el 29/10/2026).
 - En el servidor local, / redirige a /api/sitios.
 - Pruebas locales de la API, errores 404 y rutas anteriores.
 - Instrucciones de arranque en docs/alex-sprint2-backend.md.
-Pendiente: conexion a Supabase/PostgreSQL, recepcion MQTT y conexion
-con el frontend. No se ha verificado el despliegue de esta version en Vercel.
+Conexion a Supabase comprobada el 29/10/2026. Pendiente: recepcion MQTT
+y conexion con el frontend. No se ha verificado el despliegue de esta version en Vercel.
 
 REPARTO PROPUESTO
 Alex - backend y base de datos:
@@ -54,7 +54,11 @@ Respuesta HTTP 200:
 }
 El servidor real devuelve el texto con tildes.
 Estados admitidos: "libre" y "ocupado", siempre en minusculas.
-id es un numero estable compartido por frontend, backend y simulador.
+ACTUALIZACION 29/10/2026: id es texto, por ejemplo CP-001, compartido
+por frontend, backend y simulador. Los ejemplos numericos anteriores son
+orientativos; deben adaptarse a los identificadores reales de Supabase.
+Tambien se devuelven desconocido, reservado y sin_conexion.
+Consultar docs/alex-sprint2-backend.md para el contrato actualizado.
 El frontend debe usar estado, no interpretar el texto de mensaje.
 La respuesta sin plazas sera {"sitios":[]}.
 Cualquier cambio de campos o tipos debe acordarse antes con el equipo.
