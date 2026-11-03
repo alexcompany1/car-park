@@ -95,3 +95,11 @@ La prueba actual reemplaza el esquema ilustrativo por un mapa real con Leaflet
 y OpenStreetMap. El frontend consulta el filtro opcional `zona=El Masnou (demo)`.
 Se muestran cuatro referencias reales de aparcamientos con estados simulados.
 El resto de los registros se conserva. Ver `el-masnou-demo.md` para las fuentes.
+
+
+## Estado actual: ubicaciones reales (03/11/2026)
+Esta sección sustituye los ejemplos de demostración anteriores.
+La base de datos contiene 13 tramos reales de estacionamiento, con todos los
+estados desconocidos. La web filtra por El Masnou - zona blava y muestra sus
+nombres y geometrías. Ver el-masnou-ubicaciones-reales.md para fuentes,
+contrato añadido y recuperación de los datos de prueba eliminados.

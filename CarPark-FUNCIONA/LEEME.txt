@@ -1,10 +1,9 @@
-CARPARK - PRUEBA EL MASNOU
+CARPARK - UBICACIONES REALES DE EL MASNOU
 
-Desde la raíz del proyecto: npm ci y npm start.
-Configura .env con la URL y la clave publicable de Supabase.
-Abre http://localhost:3000. No abras index.html con doble clic.
-El mapa de calles utiliza Leaflet y OpenStreetMap, y necesita Internet.
-Se consultan cuatro puntos de referencia de El Masnou guardados en Supabase.
-No son posiciones verificadas de plazas individuales. Los estados son simulados.
-Actualizar consulta de nuevo la API y los favoritos se guardan en el navegador.
-Fuentes y datos: docs/el-masnou-demo.md.
+Ejecuta npm ci y npm start desde la raíz del proyecto.
+Configura .env con Supabase y abre http://localhost:3000.
+Se muestran 13 tramos reales de zona blava del mapa publicado por SUMEM.
+El mapa de calles requiere Internet. Los tramos no son plazas individuales.
+La ocupación es desconocida: no hay sensores ni disponibilidad en tiempo real.
+Actualizar consulta Supabase y los favoritos se guardan en el navegador.
+Fuentes y cambios: docs/el-masnou-ubicaciones-reales.md.

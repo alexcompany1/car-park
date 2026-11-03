@@ -1,0 +1,243 @@
+{
+  "EM-ZB-PUERTO-RICO": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3269314,
+          41.481197
+        ],
+        [
+          2.328723,
+          41.4815849
+        ],
+        [
+          2.3295813,
+          41.4817878
+        ]
+      ]
+    }
+  },
+  "EM-ZB-PERE-GRAU": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3209285,
+          41.4800195
+        ],
+        [
+          2.3223715,
+          41.4803853
+        ]
+      ]
+    }
+  },
+  "EM-ZB-SANT-FELIP": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3192387,
+          41.4798869
+        ],
+        [
+          2.3207837,
+          41.4803491
+        ],
+        [
+          2.3223045,
+          41.4807269
+        ]
+      ]
+    }
+  },
+  "EM-ZB-MESTRES-VILLA": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3190242,
+          41.4802647
+        ],
+        [
+          2.3198825,
+          41.4804978
+        ]
+      ]
+    }
+  },
+  "EM-ZB-SANT-MIQUEL": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3187559,
+          41.481402
+        ],
+        [
+          2.3163205,
+          41.4807751
+        ]
+      ]
+    }
+  },
+  "EM-ZB-PINTOR-DOMENEC": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3192494,
+          41.482891
+        ],
+        [
+          2.3189704,
+          41.4821918
+        ]
+      ]
+    }
+  },
+  "EM-ZB-JOAN-MARAGALL": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3269314,
+          41.481197
+        ],
+        [
+          2.3270507,
+          41.4809257
+        ]
+      ]
+    }
+  },
+  "EM-ZB-CAN-GAIO": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3281296,
+          41.4832108
+        ],
+        [
+          2.3289262,
+          41.4834118
+        ]
+      ]
+    }
+  },
+  "EM-ZB-PLACA-OCATA": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3216226,
+          41.4810226
+        ],
+        [
+          2.3228913,
+          41.4813281
+        ]
+      ]
+    }
+  },
+  "EM-ZB-PRIMER-MAIG": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3104921,
+          41.4791896
+        ],
+        [
+          2.3113397,
+          41.4794187
+        ],
+        [
+          2.311197,
+          41.4797264
+        ]
+      ]
+    }
+  },
+  "EM-ZB-AMADEU-I": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3051386,
+          41.4793712
+        ],
+        [
+          2.3052996,
+          41.4790959
+        ],
+        [
+          2.3055007,
+          41.478917
+        ]
+      ]
+    }
+  },
+  "EM-ZB-NAVARRA": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3187452,
+          41.4817075
+        ],
+        [
+          2.3174416,
+          41.4813579
+        ],
+        [
+          2.3161917,
+          41.4810243
+        ]
+      ]
+    }
+  },
+  "EM-ZB-ROMA-FABRA": {
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3163205,
+          41.4807751
+        ],
+        [
+          2.3155923,
+          41.4820935
+        ]
+      ]
+    }
+  }
+}

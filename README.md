@@ -1,23 +1,28 @@
 # Carpark
 
-## Ejecutar frontend y backend juntos
+Web y API de estacionamiento de El Masnou.
+
+## Arranque
+
+Configura .env a partir de .env.example con la URL y la clave publicable
+existentes de Supabase. No sobrescribas un .env ya configurado.
 
 ```bash
 npm ci
 npm start
 ```
 
-Configura antes `.env` a partir de `.env.example` con la URL y la clave
-publicable del proyecto Supabase. Si ya existe, conserva la configuración.
-Abre http://localhost:3000: se muestra `CarPark-FUNCIONA/index.html`.
-GET /api/sitios devuelve las plazas de Supabase con ubicación y zona.
-Actualizar consulta de nuevo los datos. Favoritos se guardan en el navegador.
-El mapa de calles de El Masnou utiliza Leaflet y OpenStreetMap.
-Los cuatro puntos de referencia tienen estados simulados.
-El enlace Cómo llegar utiliza las coordenadas almacenadas. La ocupación no está verificada mediante sensores.
+Abre http://localhost:3000. La web activa está en CarPark-FUNCIONA/index.html.
+El mapa de Leaflet/OpenStreetMap necesita Internet y consulta tu API.
+GET /api/sitios devuelve los registros de Supabase.
+Actualizar vuelve a consultar; los favoritos se guardan en el navegador.
 
-`npm test` ejecuta las pruebas del backend.
-Consulta `docs/alex-sprint2-backend.md` para el contrato de la API.
-La versión anterior en index.html, css y js se conserva como referencia.
+Hay 13 tramos reales de zona blava del mapa de Google My Maps enlazado por
+SUMEM. No son plazas individuales: su ocupación es desconocida.
+Se retiraron los datos de prueba tras guardar una copia local en backups/.
 
-Escenario de prueba y fuentes: docs/el-masnou-demo.md.
+```bash
+npm test
+```
+
+Fuentes, importación y copia de seguridad: docs/el-masnou-ubicaciones-reales.md.

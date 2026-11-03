@@ -25,23 +25,23 @@
 <main>
  <section id="inicio" class="hero">
   <div class="hero-photo" role="img" aria-label="Señal de aparcamiento de zona azul en una calle"></div>
-  <div class="shell hero-inner"><div class="hero-copy"><span class="eyebrow"><span class="pulse"></span> Tu aparcamiento, más fácil</span><h1>Encuentra aparcamiento en El Masnou.</h1><p>Consulta las plazas disponibles en un mapa, encuentra la más cercana y llega sin complicaciones.</p><div class="hero-actions"><a class="btn primary" href="#mapa">⌖ &nbsp; Ver mapa de plazas</a><a class="btn outline" href="#como-funciona">Cómo funciona →</a></div><span class="demo-note">El Masnou · Referencias geográficas reales, plazas y ocupación de demostración</span></div></div>
+  <div class="shell hero-inner"><div class="hero-copy"><span class="eyebrow"><span class="pulse"></span> Tu aparcamiento, más fácil</span><h1>Encuentra aparcamiento en El Masnou.</h1><p>Consulta tramos de estacionamiento de El Masnou sobre el mapa. La ocupación actual todavía no está disponible.</p><div class="hero-actions"><a class="btn primary" href="#mapa">⌖ &nbsp; Ver mapa de plazas</a><a class="btn outline" href="#como-funciona">Cómo funciona →</a></div><span class="demo-note">Tramos reales de estacionamiento · Sin datos de ocupación en tiempo real</span></div></div>
  </section>
  <section class="shell app-section" id="mapa">
-  <div class="section-heading"><div><span class="section-overline">APARCAMIENTO INTELIGENTE</span><h2>Encuentra tu próxima plaza</h2><p>Explora el mapa y selecciona una plaza para ver sus detalles.</p></div><div class="demo-pill">● El Masnou · demo</div></div>
-  <div class="stats"><div class="stat"><div class="stat-icon blue">▦</div><div><strong id="totalNum">0</strong><span>Plazas en el mapa</span></div></div><div class="stat"><div class="stat-icon green">✓</div><div><strong id="freeNum">0</strong><span>Plazas libres</span></div></div><div class="stat"><div class="stat-icon red">×</div><div><strong id="busyNum">0</strong><span>Plazas ocupadas</span></div></div></div>
+  <div class="section-heading"><div><span class="section-overline">APARCAMIENTO INTELIGENTE</span><h2>Consulta el estacionamiento en El Masnou</h2><p>Selecciona un tramo para consultar su ubicación. No corresponde a una única plaza individual.</p></div><div class="demo-pill">● El Masnou · zona blava</div></div>
+  <div class="stats"><div class="stat"><div class="stat-icon blue">▦</div><div><strong id="totalNum">0</strong><span>Tramos cartografiados</span></div></div><div class="stat"><div class="stat-icon green">✓</div><div><strong id="freeNum">0</strong><span>Tramos libres</span></div></div><div class="stat"><div class="stat-icon red">×</div><div><strong id="busyNum">0</strong><span>Sin datos de ocupación</span></div></div></div>
   <div class="toolbar"><label class="search"><span>⌕</span><input type="search" id="search" placeholder="Buscar por calle o número..." autocomplete="off" aria-label="Buscar calle" /></label><label class="filter-check"><input id="freeOnly" type="checkbox" /> Mostrar solo libres</label><button class="btn light" id="simulateBtn" title="Consultar de nuevo la API">↻ &nbsp; Actualizar</button><button class="btn text-btn" id="resetBtn">Limpiar filtros</button></div>
   <p id="connectionStatus" role="status" aria-live="polite">Consultando plazas…</p>
   <div class="main-grid"><article class="panel map-panel"><div class="panel-title"><h3><span class="blue-text">⌖</span> Mapa de aparcamiento</h3><span class="map-caption">El Masnou · OpenStreetMap</span></div>
-    <div class="map-stage" id="mapStage" aria-label="Mapa de El Masnou"></div><div class="map-foot"><span>📍 Haz clic en un marcador para ver la plaza</span><span>Mapa real · Marcadores de demostración</span></div>
+    <div class="map-stage" id="mapStage" aria-label="Mapa de El Masnou"></div><div class="map-foot"><span>📍 Haz clic en un marcador para ver la plaza</span><span>Tramos del mapa publicado por SUMEM</span></div>
   </article>
-  <aside class="panel spots-panel"><div class="panel-title"><h3><span class="blue-text">☷</span> Puntos de prueba</h3><span class="count" id="resultsCount">0 plazas</span></div><div class="spot-list" id="spotList" aria-live="polite"></div></aside></div>
-  <div class="detail" id="detail" hidden><div class="detail-left"><div class="detail-label">PLAZA SELECCIONADA</div><h3 id="detailTitle"></h3><p id="detailAddress"></p><span id="detailStatus" class="status"></span></div><div class="detail-actions"><button class="btn light" id="favoriteBtn">♡ Guardar</button><a class="btn primary" id="routeBtn" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a><button class="close-detail" id="closeDetail" aria-label="Cerrar detalle">×</button></div></div>
+  <aside class="panel spots-panel"><div class="panel-title"><h3><span class="blue-text">☷</span> Tramos de estacionamiento</h3><span class="count" id="resultsCount">0 plazas</span></div><div class="spot-list" id="spotList" aria-live="polite"></div></aside></div>
+  <div class="detail" id="detail" hidden><div class="detail-left"><div class="detail-label">TRAMO SELECCIONADO</div><h3 id="detailTitle"></h3><p id="detailAddress"></p><span id="detailStatus" class="status"></span></div><div class="detail-actions"><button class="btn light" id="favoriteBtn">♡ Guardar</button><a class="btn primary" id="routeBtn" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a><button class="close-detail" id="closeDetail" aria-label="Cerrar detalle">×</button></div></div>
  </section>
- <section class="features" id="como-funciona"><div class="shell"><div class="center-head"><span class="section-overline">ASÍ DE SENCILLO</span><h2>Aparcar nunca fue tan fácil</h2><p>Tres pasos para encontrar tu plaza.</p></div><div class="feature-grid"><div class="feature"><span class="feature-icon">⌕</span><h3>1. Busca una calle</h3><p>Escribe una dirección o explora las plazas desde el mapa.</p></div><div class="feature"><span class="feature-icon">⌖</span><h3>2. Comprueba el estado</h3><p>Identifica las plazas libres en verde y las ocupadas en rojo.</p></div><div class="feature"><span class="feature-icon">↗</span><h3>3. Consulta la ruta</h3><p>Selecciona una plaza y abre su ubicación aproximada en Google Maps.</p></div></div></div></section>
- <section class="shell contact" id="contacto"><div><span class="section-overline">PROYECTO CARPARK</span><h2>Una forma más inteligente de aparcar.</h2><p>Proyecto académico conectado a Supabase. Puedes consultar las plazas, filtrar y guardar favoritos en este navegador.</p></div><a href="#mapa" class="btn primary">Volver al mapa ↑</a></section>
+ <section class="features" id="como-funciona"><div class="shell"><div class="center-head"><span class="section-overline">ASÍ DE SENCILLO</span><h2>Aparcar nunca fue tan fácil</h2><p>Tres pasos para encontrar tu plaza.</p></div><div class="feature-grid"><div class="feature"><span class="feature-icon">⌕</span><h3>1. Busca una calle</h3><p>Escribe una dirección o explora las plazas desde el mapa.</p></div><div class="feature"><span class="feature-icon">⌖</span><h3>2. Comprueba el estado</h3><p>Consulta el estado cuando haya mediciones. Ahora los tramos aparecen sin datos de ocupación.</p></div><div class="feature"><span class="feature-icon">↗</span><h3>3. Consulta la ruta</h3><p>Selecciona una plaza y abre su ubicación aproximada en Google Maps.</p></div></div></div></section>
+ <section class="shell contact" id="contacto"><div><span class="section-overline">PROYECTO CARPARK</span><h2>Una forma más inteligente de aparcar.</h2><p>Ubicaciones de estacionamiento publicadas por SUMEM. Puedes consultar los tramos y guardar favoritos; la ocupación se mostrará cuando exista una fuente de medición.</p></div><a href="#mapa" class="btn primary">Volver al mapa ↑</a></section>
 </main>
-<footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Referencias reales · Disponibilidad simulada</span></div></footer>
+<footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Fuente: SUMEM / Google My Maps · Ocupación desconocida</span></div></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -65,8 +65,13 @@ function drawMarkers(matching){
  const colors={libre:'#159b53',ocupado:'#ed4852',desconocido:'#bd861b',reservado:'#8153bc',sin_conexion:'#77869b'};
  matching.filter(validLocation).forEach(s=>{
   const marker=L.circleMarker([s.latitud,s.longitud],{radius:selected===s.id?12:9,color:'#fff',weight:3,fillColor:colors[s.estado]||colors.desconocido,fillOpacity:1}).addTo(markerLayer);
-  const label=document.createElement('span');label.textContent=s.id+' · '+stateText(s)+' (demo)';
+  const label=document.createElement('span');label.textContent=(s.nombre||s.direccion||s.id)+' · '+stateText(s);
   marker.bindTooltip(label);marker.on('click',()=>selectSpot(s.id));
+  if(s.geometria?.type==='LineString') {
+   const line=L.geoJSON(s.geometria,{style:{color:'#1278f8',weight:6,opacity:.75}}).addTo(markerLayer);
+   const text=document.createElement('span');text.textContent=(s.nombre||s.direccion)+' · '+stateText(s);
+   line.bindTooltip(text);line.on('click',()=>selectSpot(s.id));
+  }
  });
 }
 function fitMap(){if(map && markerLayer.getLayers().length)map.fitBounds(markerLayer.getBounds(),{padding:[45,45],maxZoom:17});}
@@ -78,24 +83,24 @@ let toastTimer;
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2600);}
 function visibleSpots(){const q=$('search').value.trim().toLocaleLowerCase('es');return spots.filter(s=>(!$('freeOnly').checked||s.estado==='libre')&&(`${s.id} ${s.direccion} ${s.zona}`.toLocaleLowerCase('es').includes(q)));}
 const stateClass = s => s.estado==='libre'?'free':s.estado==='ocupado'?'busy':'other';
-const stateText = s => labels[s.estado] || labels.desconocido;
+const stateText = s => s.estado === 'desconocido' ? 'Sin datos de ocupación' : (labels[s.estado] || labels.desconocido);
 function statusHTML(s){return `<span class="status ${stateClass(s)}">● ${stateText(s)}</span>`;}
 function render(){
  const matching=visibleSpots();
  $('totalNum').textContent=spots.length;
  $('freeNum').textContent=spots.filter(s=>s.estado==='libre').length;
- $('busyNum').textContent=spots.filter(s=>s.estado==='ocupado').length;
- $('resultsCount').textContent=`${matching.length} plazas`;
+ $('busyNum').textContent=spots.filter(s=>s.estado==='desconocido').length;
+ $('resultsCount').textContent=`${matching.length} tramos`;
  drawMarkers(matching);
- $('spotList').innerHTML=matching.length?matching.map(s=>`<button class="spot-item ${selected===s.id?'selected':''}" data-id="${esc(s.id)}"><span class="spot-img" style="display:grid;place-items:center;color:#1278f8;font-size:28px" aria-hidden="true">P</span><span class="spot-meta"><span class="spot-name">${esc(s.id)} ${favorites.includes(s.id)?'♥':''}</span><span class="spot-address">${esc(s.direccion || 'Sin dirección')} · ${esc(s.zona || 'Sin zona')}</span>${statusHTML(s)}</span><span class="spot-arrow">›</span></button>`).join(''):`<div class="empty">${loading?'Consultando plazas…':'No hay plazas que coincidan con tu búsqueda.'}</div>`;
+ $('spotList').innerHTML=matching.length?matching.map(s=>`<button class="spot-item ${selected===s.id?'selected':''}" data-id="${esc(s.id)}"><span class="spot-img" style="display:grid;place-items:center;color:#1278f8;font-size:28px" aria-hidden="true">P</span><span class="spot-meta"><span class="spot-name">${esc(s.nombre || s.direccion || s.id)} ${favorites.includes(s.id)?'♥':''}</span><span class="spot-address">${esc(s.tipo_ubicacion === 'tramo' ? 'Tramo de estacionamiento' : (s.direccion || 'Sin dirección'))} · ${esc(s.zona || 'Sin zona')}</span>${statusHTML(s)}</span><span class="spot-arrow">›</span></button>`).join(''):`<div class="empty">${loading?'Consultando plazas…':'No hay plazas que coincidan con tu búsqueda.'}</div>`;
  document.querySelectorAll('[data-id]').forEach(el=>el.addEventListener('click',()=>selectSpot(el.dataset.id)));
  renderDetail();
 }
 function selectSpot(id){selected=id;render();const spot=spots.find(s=>s.id===id);if(map&&spot&&validLocation(spot))map.panTo([spot.latitud,spot.longitud]);$('detail').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function renderDetail(){
  const s=spots.find(s=>s.id===selected);$('detail').hidden=!s;if(!s)return;
- $('detailTitle').textContent=s.id;
- const date=s.ultima_actualizacion?new Date(s.ultima_actualizacion).toLocaleString('es-ES'):'Sin fecha';
+ $('detailTitle').textContent=s.nombre||s.direccion||s.id;
+ const date=s.ultima_actualizacion?new Date(s.ultima_actualizacion).toLocaleString('es-ES'):'Sin medición de ocupación';
  $('detailAddress').textContent=`${s.direccion || 'Sin dirección'} · ${s.zona || 'Sin zona'} · Actualización: ${date}`;
  $('detailStatus').className='status '+stateClass(s);$('detailStatus').textContent='● '+stateText(s);
  $('favoriteBtn').textContent=favorites.includes(s.id)?'♥ Guardada':'♡ Guardar';
@@ -106,12 +111,12 @@ async function loadSpots(){
  if(loading)return;loading=true;$('simulateBtn').disabled=true;
  $('connectionStatus').textContent='Consultando plazas…';render();
  try {
-  const response=await fetch('/api/sitios?zona='+encodeURIComponent('El Masnou (demo)'),{cache:'no-store',signal:AbortSignal.timeout(15000)});
+  const response=await fetch('/api/sitios?zona='+encodeURIComponent('El Masnou - zona blava'),{cache:'no-store',signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw new Error('Consulta fallida');
   const body=await response.json();if(!Array.isArray(body.sitios))throw new Error('Respuesta incorrecta');
   spots=body.sitios.map(s=>({...s,id:String(s.id),latitud:s.latitud==null?null:Number(s.latitud),longitud:s.longitud==null?null:Number(s.longitud)}));
   if(!spots.some(s=>s.id===selected))selected=null;
-  $('connectionStatus').textContent=`${spots.length} plazas consultadas · ${new Date().toLocaleTimeString('es-ES')}`;
+  $('connectionStatus').textContent=`${spots.length} tramos consultados · ${new Date().toLocaleTimeString('es-ES')}`;
  } catch {
   spots=[];selected=null;
   $('connectionStatus').textContent='No se han podido consultar las plazas. Pulsa Actualizar para reintentar.';

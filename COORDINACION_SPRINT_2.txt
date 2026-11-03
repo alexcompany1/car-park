@@ -1,3 +1,13 @@
+ESTADO ACTUAL 03/11/2026 - UBICACIONES REALES
+La base de datos ahora tiene 13 tramos EM-ZB-... de la zona
+El Masnou - zona blava. Se retiraron los CP-... y EM-DEMO-... de prueba.
+No usar esos identificadores antiguos en el simulador de Marc.
+Los nuevos registros representan tramos, no plazas individuales; acordar
+cómo medir ocupación antes de simular un estado agregado de todo un tramo.
+La disponibilidad actual es desconocida y no hay dispositivos enlazados.
+Fuentes y detalles: docs/el-masnou-ubicaciones-reales.md.
+
+PLANIFICACION ANTERIOR (REFERENCIA HISTORICA)
 CARPARK - COORDINACION DEL SPRINT 2
 Fecha: 27/10/2026
 

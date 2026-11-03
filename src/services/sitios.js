@@ -2,6 +2,8 @@ const path = require('node:path');
 require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env'), quiet: true });
 const { createClient } = require('@supabase/supabase-js');
 
+const tramos = require('../data/tramos-el-masnou.json');
+
 const estados = {
   free: ['libre', 'está disponible'],
   occupied: ['ocupado', 'no está disponible'],
@@ -33,7 +35,9 @@ function getClient() {
 function mapPlaza({ id, estado_actual, direccion, latitud, longitud, ultima_actualizacion, zonas }) {
   const [estado, texto] = estados[estado_actual] || estados.unknown;
   return {
-    id, estado, mensaje: `La plaza ${id} ${texto}`,
+    id, estado,
+    mensaje: tramos[id] ? `${direccion}: ${estado === 'desconocido' ? 'sin datos de ocupación' : texto}` : `La plaza ${id} ${texto}`,
+    ...(tramos[id] ? { nombre: direccion, ...tramos[id] } : {}),
     direccion: direccion ?? null,
     latitud: latitud == null ? null : Number(latitud),
     longitud: longitud == null ? null : Number(longitud),

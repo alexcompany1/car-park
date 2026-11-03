@@ -87,3 +87,23 @@ test('El filtro de zona llega a la consulta y rechaza parámetros con formato in
     await invalid.json();
   }
 });
+
+
+test('Los tramos reales tienen nombre, geometría verificable y ocupación desconocida', () => {
+  const catalog = require('../src/data/tramos-el-masnou.json');
+  assert.equal(Object.keys(catalog).length,13);
+  for (const [id,source] of Object.entries(catalog)) {
+    assert.ok(id.length<=20);
+    const result=mapPlaza({id,estado_actual:'unknown',direccion:'Zona blava carrer Navarra',latitud:41.4813652,longitud:2.3174688,zonas:{nombre:'El Masnou - zona blava'}});
+    assert.equal(result.nombre,'Zona blava carrer Navarra');
+    assert.equal(result.tipo_ubicacion,'tramo');
+    assert.equal(result.estado,'desconocido');
+    assert.match(result.mensaje,/sin datos de ocupación/);
+    assert.match(result.fuente_url,/google.com/);
+    assert.equal(source.geometria.type,'LineString');
+    for(const [lng,lat] of source.geometria.coordinates) {
+      assert.ok(lat>41.47 && lat<41.50);
+      assert.ok(lng>2.30 && lng<2.34);
+    }
+  }
+});
