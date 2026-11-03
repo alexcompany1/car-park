@@ -1,0 +1,11 @@
+CARPARK - VERSIÓN CORREGIDA (UN SOLO ARCHIVO)
+
+1. Abre la carpeta CarPark-FUNCIONA.
+2. Haz doble clic en index.html para abrirlo con Google Chrome o Microsoft Edge.
+
+Incluye HTML, CSS, JavaScript y fotografías integrados dentro de index.html.
+No necesitas Internet, Node.js ni servidor para ver la web y sus fotos.
+Las plazas y sus estados son datos de demostración (no hay conexión MQTT ni backend).
+El enlace externo de Google Maps necesita conexión a Internet.
+
+Esta carpeta se añadió a la rama pau sin modificar la web principal ni otras carpetas del proyecto.
