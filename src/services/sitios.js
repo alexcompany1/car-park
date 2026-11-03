@@ -30,18 +30,27 @@ function getClient() {
   return client;
 }
 
-function mapPlaza({ id, estado_actual }) {
+function mapPlaza({ id, estado_actual, direccion, latitud, longitud, ultima_actualizacion, zonas }) {
   const [estado, texto] = estados[estado_actual] || estados.unknown;
-  return { id, estado, mensaje: `La plaza ${id} ${texto}` };
+  return {
+    id, estado, mensaje: `La plaza ${id} ${texto}`,
+    direccion: direccion ?? null,
+    latitud: latitud == null ? null : Number(latitud),
+    longitud: longitud == null ? null : Number(longitud),
+    zona: zonas?.nombre ?? null,
+    ultima_actualizacion: ultima_actualizacion ?? null,
+  };
 }
 
-async function getSitios() {
+async function getSitios({ zona } = {}) {
   // Lee en bloques para no truncar la lista con el límite de Supabase.
   const sitios = [];
   const size = 1000;
   for (let start = 0; ; start += size) {
-    const { data, error } = await getClient().from('plazas')
-      .select('id,estado_actual').order('id').range(start, start + size - 1);
+    let query = getClient().from('plazas')
+      .select('id,estado_actual,direccion,latitud,longitud,ultima_actualizacion,zonas!inner(nombre)').order('id').range(start, start + size - 1);
+    if (zona) query = query.eq('zonas.nombre', zona);
+    const { data, error } = await query;
     if (error) throw error;
     sitios.push(...data.map(mapPlaza));
     if (data.length < size) return sitios;

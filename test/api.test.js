@@ -17,8 +17,8 @@ test('API de Carpark y rutas existentes', async (t) => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get('content-type'), /application\/json/);
   assert.deepEqual(await response.json(), { sitios: [
-    { id: 'CP-001', estado: 'libre', mensaje: 'La plaza CP-001 está disponible' },
-    { id: 'CP-002', estado: 'ocupado', mensaje: 'La plaza CP-002 no está disponible' },
+    { id: 'CP-001', estado: 'libre', mensaje: 'La plaza CP-001 está disponible', direccion: null, latitud: null, longitud: null, zona: null, ultima_actualizacion: null },
+    { id: 'CP-002', estado: 'ocupado', mensaje: 'La plaza CP-002 no está disponible', direccion: null, latitud: null, longitud: null, zona: null, ultima_actualizacion: null },
   ] });
   const missing = await fetch(base + '/no-existe');
   assert.equal(missing.status, 404);
@@ -26,8 +26,13 @@ test('API de Carpark y rutas existentes', async (t) => {
   const health = await fetch(base + '/health');
   assert.deepEqual(await health.json(), { status: 'ok' });
   const home = await fetch(base + '/', { redirect: 'manual' });
-  assert.equal(home.status, 302);
-  assert.equal(home.headers.get('location'), '/api/sitios');
+  assert.equal(home.status, 200);
+  assert.match(await home.text(), /id="mapStage"/);
+  for (const file of ['/js/app.js', '/css/styles.css']) {
+    const asset = await fetch(base + file);
+    assert.equal(asset.status, 200);
+    await asset.text();
+  }
   for (const route of ['/timeline']) {
     const page = await fetch(base + route);
     assert.equal(page.status, 200);
@@ -53,5 +58,32 @@ test('Una base de datos vacía devuelve una lista vacía; un fallo devuelve 503 
     const response = await fetch(`http://127.0.0.1:${server.address().port}/api/sitios`);
     assert.equal(response.status, status);
     assert.deepEqual(await response.json(), body);
+  }
+});
+
+ test('La API conserva ubicación y zona y convierte coordenadas numéricas', () => {
+  const result = mapPlaza({ id: 'CP-001', estado_actual: 'free', direccion: 'Calle 1', latitud: '41.3', longitud: '2.1', zonas: { nombre: 'Centro' }, ultima_actualizacion: '2026-11-03T10:00:00Z' });
+  assert.equal(result.latitud, 41.3);
+  assert.equal(result.longitud, 2.1);
+  assert.equal(result.zona, 'Centro');
+  assert.equal(result.direccion, 'Calle 1');
+  assert.equal(result.ultima_actualizacion, '2026-11-03T10:00:00Z');
+});
+
+
+test('El filtro de zona llega a la consulta y rechaza parámetros con formato incorrecto', async t => {
+  let received;
+  const server=createApp(async options => { received=options; return []; }).listen(0,'127.0.0.1');
+  t.after(()=>new Promise(resolve=>server.close(resolve)));
+  await once(server,'listening');
+  const base=`http://127.0.0.1:${server.address().port}`;
+  const valid=await fetch(base+'/api/sitios?zona='+encodeURIComponent('El Masnou (demo)'));
+  assert.equal(valid.status,200);
+  await valid.json();
+  assert.deepEqual(received,{zona:'El Masnou (demo)'});
+  for(const query of ['zona=','zona=a&zona=b']) {
+    const invalid=await fetch(base+'/api/sitios?'+query);
+    assert.equal(invalid.status,400);
+    await invalid.json();
   }
 });

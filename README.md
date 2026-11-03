@@ -1,33 +1,23 @@
-# CarPark
+# Carpark
 
-Proyecto académico de aparcamiento inteligente.
+## Ejecutar frontend y backend juntos
 
-## Cómo ejecutar
-1. Abre esta carpeta en Visual Studio Code.
-2. Instala la extensión Live Server.
-3. Abre `index.html` y selecciona **Open with Live Server**.
-4. Mantén conexión a Internet para cargar Leaflet, OpenStreetMap y las fuentes web.
-
-## Funciones incluidas
-- Mapa interactivo de Barcelona con marcadores.
-- Búsqueda por código, calle, zona o estado.
-- Filtros por disponibilidad y zona.
-- Resumen de plazas libres, ocupadas y totales.
-- Panel de detalles y enlace para obtener indicaciones.
-- Botón para centrar el mapa en la ubicación del navegador.
-
-## Estructura
-```
-car-park/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── app.js
-└── README.md
+```bash
+npm ci
+npm start
 ```
 
-## Datos de demostración
-Las diez plazas, sus estados, distancias y horas de actualización están simulados en `js/app.js`. No representan disponibilidad real ni están conectados a sensores ESP32, MQTT o un backend. La geolocalización del navegador requiere permiso del usuario y un contexto seguro (por ejemplo, localhost mediante Live Server).
+Configura antes `.env` a partir de `.env.example` con la URL y la clave
+publicable del proyecto Supabase. Si ya existe, conserva la configuración.
+Abre http://localhost:3000: se muestra `CarPark-FUNCIONA/index.html`.
+GET /api/sitios devuelve las plazas de Supabase con ubicación y zona.
+Actualizar consulta de nuevo los datos. Favoritos se guardan en el navegador.
+El mapa de calles de El Masnou utiliza Leaflet y OpenStreetMap.
+Los cuatro puntos de referencia tienen estados simulados.
+El enlace Cómo llegar utiliza las coordenadas almacenadas. La ocupación no está verificada mediante sensores.
 
-Mapa: Leaflet + OpenStreetMap.
+`npm test` ejecuta las pruebas del backend.
+Consulta `docs/alex-sprint2-backend.md` para el contrato de la API.
+La versión anterior en index.html, css y js se conserva como referencia.
+
+Escenario de prueba y fuentes: docs/el-masnou-demo.md.

@@ -1,11 +1,10 @@
-CARPARK - VERSIÓN CORREGIDA (UN SOLO ARCHIVO)
+CARPARK - PRUEBA EL MASNOU
 
-1. Abre la carpeta CarPark-FUNCIONA.
-2. Haz doble clic en index.html para abrirlo con Google Chrome o Microsoft Edge.
-
-Incluye HTML, CSS, JavaScript y fotografías integrados dentro de index.html.
-No necesitas Internet, Node.js ni servidor para ver la web y sus fotos.
-Las plazas y sus estados son datos de demostración (no hay conexión MQTT ni backend).
-El enlace externo de Google Maps necesita conexión a Internet.
-
-Esta carpeta se añadió a la rama pau sin modificar la web principal ni otras carpetas del proyecto.
+Desde la raíz del proyecto: npm ci y npm start.
+Configura .env con la URL y la clave publicable de Supabase.
+Abre http://localhost:3000. No abras index.html con doble clic.
+El mapa de calles utiliza Leaflet y OpenStreetMap, y necesita Internet.
+Se consultan cuatro puntos de referencia de El Masnou guardados en Supabase.
+No son posiciones verificadas de plazas individuales. Los estados son simulados.
+Actualizar consulta de nuevo la API y los favoritos se guardan en el navegador.
+Fuentes y datos: docs/el-masnou-demo.md.

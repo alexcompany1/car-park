@@ -54,7 +54,7 @@ La respuesta utiliza `Cache-Control: no-store`.
 - `src/services/sitios.js`: conexión, consulta y traducción de estados.
 - `api/sitios.js`: reutiliza la aplicación en Vercel.
 
-`/` redirige a `/api/sitios`. Se conservan `/timeline` y `/health`;
+`/` muestra la web de `CarPark-FUNCIONA`, conectada a `/api/sitios`. Se conservan `/timeline` y `/health`;
 `/health` indica que el proceso responde, no comprueba la base de datos.
 Las rutas desconocidas devuelven HTTP 404.
 
@@ -69,3 +69,29 @@ estados, lista vacía y fallos sin depender de Internet. La comprobación real d
 no demuestra que su ocupación provenga de sensores reales. MQTT sigue pendiente.
 El proyecto estaba pausado y se reactivó para realizar la comprobación.
 El despliegue de esta versión en Vercel no se ha verificado.
+
+
+## Frontend conectado (03/11/2026)
+Arranca todo con `npm start` y abre http://localhost:3000.
+La web principal utiliza `CarPark-FUNCIONA/index.html`; también se sirve
+bajo `/CarPark-FUNCIONA/`. Necesita el servidor, no debe abrirse por doble clic.
+El botón Actualizar consulta la API sin modificar la ocupación.
+Los favoritos permanecen en el navegador; los estados se leen de Supabase.
+El esquema del mapa es ilustrativo: las posiciones se distribuyen relativamente
+según coordenadas, pero el dibujo de calles no es un mapa geográfico real.
+Cómo llegar abre las coordenadas de la plaza en Google Maps.
+
+La API añade `direccion`, `latitud`, `longitud`, `zona` y
+`ultima_actualizacion`, conservando `id`, `estado` y `mensaje`.
+Las zonas se consultan mediante la relación `plazas.zona_id -> zonas.id`.
+Las fotografías decorativas del encabezado se conservan; no se atribuyen
+fotografías de muestra a las plazas de la base de datos.
+La web anterior en la raíz se conserva como referencia, pero el servidor
+muestra la nueva carpeta. No se ha desplegado esta integración en Vercel.
+
+
+## Actualización El Masnou
+La prueba actual reemplaza el esquema ilustrativo por un mapa real con Leaflet
+y OpenStreetMap. El frontend consulta el filtro opcional `zona=El Masnou (demo)`.
+Se muestran cuatro referencias reales de aparcamientos con estados simulados.
+El resto de los registros se conserva. Ver `el-masnou-demo.md` para las fuentes.
