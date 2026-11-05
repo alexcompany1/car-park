@@ -33,11 +33,9 @@ test('API de Carpark y rutas existentes', async (t) => {
     assert.equal(asset.status, 200);
     await asset.text();
   }
-  for (const route of ['/timeline']) {
-    const page = await fetch(base + route);
-    assert.equal(page.status, 200);
-    assert.match(page.headers.get('content-type'), /text\/html/);
-    await page.text();
+  for (const route of ['/timeline', '/api/timeline']) {
+    const response = await fetch(base + route);
+    assert.equal(response.status, 404);
   }
 });
 

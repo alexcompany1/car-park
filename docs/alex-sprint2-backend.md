@@ -54,7 +54,7 @@ La respuesta utiliza `Cache-Control: no-store`.
 - `src/services/sitios.js`: conexión, consulta y traducción de estados.
 - `api/sitios.js`: reutiliza la aplicación en Vercel.
 
-`/` muestra la web de `CarPark-FUNCIONA`, conectada a `/api/sitios`. Se conservan `/timeline` y `/health`;
+`/` muestra la web de `CarPark-FUNCIONA`, conectada a `/api/sitios`.
 `/health` indica que el proceso responde, no comprueba la base de datos.
 Las rutas desconocidas devuelven HTTP 404.
 

@@ -27,7 +27,7 @@ Abre [CarPark en local](http://localhost:3000/). El mapa usa Leaflet y OpenStree
 | [CarPark-FUNCIONA/index.html](CarPark-FUNCIONA/index.html) | Web activa y mapa. Edita este archivo para cambiar la página principal. |
 | [server.js](server.js) y [src/app.js](src/app.js) | Arranque local y rutas de Express. |
 | [src/services/sitios.js](src/services/sitios.js) | Consulta a Supabase para `GET /api/sitios`. |
-| [api/](api/) y [vercel.json](vercel.json) | Entradas y configuración para Vercel. |
+| [api/](api/) | Entradas para Vercel. |
 | [test/](test/) | Pruebas de la API y de las rutas principales. |
 | [docs/](docs/) | Documentación, fuentes de los datos y notas de los sprints. |
 

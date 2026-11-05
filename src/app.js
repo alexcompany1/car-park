@@ -22,9 +22,6 @@ function createApp(loadSitios = getSitios) {
   app.use('/CarPark-FUNCIONA', express.static(path.join(__dirname, '..', 'CarPark-FUNCIONA')));
   app.use('/css', express.static(path.join(__dirname, '..', 'css')));
   app.use('/js', express.static(path.join(__dirname, '..', 'js')));
-  app.get('/timeline', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'timeline.html'));
-  });
   app.use((req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));
   return app;
 }
