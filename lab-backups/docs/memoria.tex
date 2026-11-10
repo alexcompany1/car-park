@@ -1,0 +1,84 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,columns=fullflexible}
+\title{CarPark\\Laboratorio de copias y recuperación}
+\author{Alex, Pau y Marc\\Proyecto Intermodular ASIX2}
+\date{10 de noviembre de 2026}
+\begin{document}
+\maketitle
+
+\section{Objetivo y alcance}
+El laboratorio permite demostrar la recuperación del catálogo de CarPark ante una pérdida de datos en un entorno Docker aislado. Cubre seis tablas de negocio: ciudades, direcciones, zonas, plazas, dispositivos e histórico de ocupación. Las cuentas de Auth, la tabla de usuarios, Storage y la configuración de Vercel requieren procedimientos específicos. Los registros actuales de plazas representan tramos de estacionamiento.
+
+\section{Infraestructura encontrada}
+La web y la API Express están publicadas en Vercel. La base de datos original es PostgreSQL 17.11 en Supabase. La aplicación utiliza una URL y una clave publicable para consultar la API de datos. Esa clave no es una contraseña PostgreSQL y no permite ejecutar pg\_dump.
+
+\section{Arquitectura del laboratorio}
+\begin{verbatim}
+Navegador local -> Express -> Nginx -> PostgREST -> PostgreSQL lab
+                                               <- herramientas
+Supabase original <- exportador de solo lectura
+                            |
+                  backups y manifiestos locales
+\end{verbatim}
+Nginx adapta el prefijo REST del cliente de Supabase. PostgREST permite consultar las tablas sin cambiar el backend existente. Las operaciones de restauración se conectan a un host y una base de datos fijos dentro de la red interna. La API dispone además de una red puente para publicar el puerto de loopback. El exportador remoto tiene una red diferente y no recibe las credenciales de administración del laboratorio.
+
+\section{Contenedores y configuración}
+El servidor PostgreSQL conserva sus datos en un volumen. Express publica únicamente el puerto local 3101. PostgreSQL y PostgREST no exponen puertos al exterior. Los clientes de copia y el servidor utilizan PostgreSQL 17, y las imágenes base se fijan por digest. Los secretos se crean en un directorio local privado y se montan solo en los servicios que los necesitan.
+
+\section{Procedimiento de copia}
+Se utiliza pg\_dump con formato custom y una lista de seis tablas permitidas. El archivo se escribe en una carpeta temporal. Al terminar, pg\_restore inspecciona su contenido y se crea un manifiesto con fecha, versión, suma SHA-256, columnas, número de filas y huellas de los datos. Los recuentos proceden de la misma copia. La carpeta se publica mediante un renombrado al finalizar correctamente.
+
+\begin{lstlisting}
+./lab-backups/scripts/lab.sh backup-local
+./lab-backups/scripts/lab.sh backup-source
+\end{lstlisting}
+La segunda orden requiere una conexión PostgreSQL a Supabase configurada localmente. Se solicita una sesión de solo lectura, se verifica el certificado TLS y se comprueba la versión del servidor. Los permisos y las políticas RLS del usuario determinan qué filas puede exportar.
+
+\section{Restauración y consistencia}
+Antes de escribir, se verifica la marca del laboratorio, su identificador y el nombre de la base. Se valida el manifiesto y la integridad del archivo. Las tablas se restauran dentro de una transacción. Si falla alguna sentencia, PostgreSQL revierte toda la restauración. Después se repone la función calculada de dirección que necesita la API publicada y se recarga la caché de PostgREST.
+
+\begin{lstlisting}
+./lab-backups/scripts/lab.sh restore
+./lab-backups/scripts/lab.sh verify
+\end{lstlisting}
+La comprobación compara las seis tablas con el manifiesto, verifica las seis claves foráneas, prueba que una referencia inválida se rechaza y comprueba los identificadores, estados y direcciones devueltos por la API.
+
+\section{Simulación de pérdida}
+La demostración crea una copia, elimina las plazas y sus registros dependientes únicamente en el laboratorio, verifica una respuesta vacía de la API y restaura los datos. La orden completa es la siguiente:
+\begin{lstlisting}
+./lab-backups/scripts/lab.sh demo
+\end{lstlisting}
+Los datos originales de Supabase no se utilizan como destino de restauración ni de simulación.
+
+\section{Seguridad y automatización}
+Los archivos de credenciales, copias y logs se excluyen de Git y de la imagen del backend. La retención mantiene siete copias válidas por origen. Un bloqueo impide que dos operaciones simultáneas compitan por los archivos. Se proporciona una plantilla cron que requiere validar primero el origen y mantener Docker activo. Para cubrir una avería física del portátil será necesaria una copia cifrada en otro soporte.
+
+\section{Reconstrucción de Vercel}
+El código se recupera desde GitHub, las dependencias se instalan con el lockfile y las variables se recuperan desde un gestor seguro. Se comprueban el proyecto, la versión de Node.js y los dominios antes de proponer un despliegue de prueba. Este laboratorio no contiene una copia de la plataforma Vercel. La recuperación de Auth y Storage queda fuera del catálogo exportado.
+
+\section{Pruebas y resultados}
+\input{resultados.tex}
+
+\section{Preguntas del profesor}
+\paragraph{¿Qué diferencia hay entre un backup y una restauración probada?}
+Un archivo puede estar incompleto o contener datos que la aplicación no puede usar. Restaurarlo y comprobar la API demuestra que esa copia permite recuperar el servicio en el entorno ensayado.
+\paragraph{¿Por qué pg\_dump y pg\_restore?}
+Son herramientas oficiales de PostgreSQL. El formato custom conserva el catálogo exportado y permite inspeccionarlo antes de restaurarlo.
+\paragraph{¿Se puede restaurar por error en Supabase?}
+Las escrituras del laboratorio usan una conexión fija a su PostgreSQL interno, con una marca e identificador propios. El servicio que conoce la conexión de Supabase no recibe las credenciales de restauración.
+\paragraph{¿SHA-256 cifra la copia?}
+No. Detecta cambios accidentales si el manifiesto es fiable. Las copias permanecen sin cifrar en un directorio privado. Para guardarlas fuera del portátil se necesita cifrado y control de acceso.
+\paragraph{¿Esta copia incluye los usuarios de Supabase y Vercel?}
+El laboratorio cubre el catálogo de seis tablas. Auth, usuarios, Storage y configuración de despliegue requieren recuperación específica.
+\paragraph{¿Qué se pierde desde la última copia?}
+Las modificaciones posteriores. La frecuencia de las copias determina ese intervalo. El tiempo de recuperación se mide con las pruebas y depende del volumen de datos y del equipo.
+
+\section{Mejoras futuras}
+Validar periódicamente el backup remoto con una cuenta de lectura, automatizar una copia cifrada fuera del equipo, definir los objetivos de pérdida de datos y tiempo de recuperación y ensayar por separado Auth, Storage y la reconstrucción del despliegue web.
+\end{document}

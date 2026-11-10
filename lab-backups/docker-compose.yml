@@ -1,0 +1,148 @@
+name: carpark-backup-lab
+
+services:
+  db:
+    image: postgres:17.11-bookworm@sha256:665dc7b37ac52a17e298511414c21d23ffa4e6a6ef6225b3e5d59c7afb35e994
+    environment:
+      POSTGRES_USER: lab_admin
+      POSTGRES_DB: carpark_lab
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets: [db_password, rest_password, lab_id]
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sh:/docker-entrypoint-initdb.d/10-lab.sh:ro
+    networks: [lab]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U lab_admin -d carpark_lab']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    security_opt: [no-new-privileges:true]
+
+  rest:
+    image: postgrest/postgrest@sha256:1347d7552b88f17832912c06afbf7c43209af6eeeb60834b04aae12c9bd9d5cc
+    entrypoint: [postgrest]
+    command: [/run/secrets/rest_config]
+    secrets: [rest_config]
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [lab]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+
+  gateway:
+    image: nginx:stable-alpine@sha256:583b7f2fce1cdb8da5ad5c39ebd3c33b98b87d493190e548bdee1fa8c619c311
+    entrypoint: [nginx]
+    command: [-c, /etc/nginx/lab.conf, -g, 'daemon off;']
+    user: '101:101'
+    volumes:
+      - ./nginx.conf:/etc/nginx/lab.conf:ro
+    depends_on:
+      rest:
+        condition: service_started
+    networks: [lab]
+    read_only: true
+    tmpfs: ['/tmp:mode=1777']
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, 'http://127.0.0.1:8080/health']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ..
+      dockerfile: lab-backups/Dockerfile
+    environment:
+      PORT: '3000'
+      SUPABASE_URL: http://gateway:8080
+    secrets: [anon_key]
+    ports:
+      - '127.0.0.1:${LAB_API_PORT:-3101}:3000'
+    depends_on:
+      db:
+        condition: service_healthy
+      gateway:
+        condition: service_healthy
+    networks: [lab, frontend]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/api/sitios').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  tools:
+    build:
+      context: .
+      dockerfile: tools.Dockerfile
+    profiles: [jobs]
+    user: '${LAB_UID:-1000}:${LAB_GID:-1000}'
+    entrypoint: [python3, /lab/scripts/lab.py]
+    environment:
+      KEEP_BACKUPS: '${KEEP_BACKUPS:-7}'
+    secrets: [db_password, lab_id]
+    volumes:
+      - ./scripts:/lab/scripts:ro
+      - ./backups:/backups
+      - ./logs:/logs
+      - ./.local/source-snapshot.json:/inputs/source-snapshot.json:ro
+    networks: [lab]
+    read_only: true
+    tmpfs: ['/tmp:mode=1777']
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+
+  backup-source:
+    build:
+      context: .
+      dockerfile: tools.Dockerfile
+    profiles: [jobs]
+    user: '${LAB_UID:-1000}:${LAB_GID:-1000}'
+    entrypoint: [python3, /lab/scripts/lab.py, backup-source]
+    environment:
+      KEEP_BACKUPS: '${KEEP_BACKUPS:-7}'
+    secrets: [source_service]
+    volumes:
+      - ./scripts:/lab/scripts:ro
+      - ./backups:/backups
+      - ./logs:/logs
+    networks: [source]
+    read_only: true
+    tmpfs: ['/tmp:mode=1777']
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+
+volumes:
+  pg_data:
+
+networks:
+  lab:
+    internal: true
+  frontend:
+  source:
+
+secrets:
+  db_password:
+    file: ./.local/db_password
+  rest_password:
+    file: ./.local/rest_password
+  lab_id:
+    file: ./.local/lab_id
+  anon_key:
+    file: ./.local/anon_key
+  rest_config:
+    file: ./.local/rest.conf
+  source_service:
+    file: ./.local/source-service.conf

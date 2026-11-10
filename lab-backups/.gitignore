@@ -1,0 +1,9 @@
+.env
+.local/
+!backups/
+backups/*
+!backups/.gitkeep
+!logs/
+logs/*
+!logs/.gitkeep
+__pycache__/
