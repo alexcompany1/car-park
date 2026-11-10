@@ -13,6 +13,7 @@ os.umask(0o077)
 local = root / '.local'
 local.mkdir(mode=0o700, exist_ok=True)
 os.chmod(local, 0o700)
+(local / 'certificates').mkdir(mode=0o700, exist_ok=True)
 
 def secret(name):
     path = local / name
@@ -41,7 +42,7 @@ for name, value in {
 
 source = local / 'source-service.conf'
 if not source.exists():
-    source.write_text('[carpark_source]\nhost=CONFIGURAR_HOST_SUPABASE\nport=5432\ndbname=postgres\nuser=CONFIGURAR_USUARIO_LECTURA\npassword=CONFIGURAR_PASSWORD_LOCALMENTE\nsslmode=verify-full\nsslrootcert=/etc/ssl/certs/ca-certificates.crt\nconnect_timeout=10\n')
+    source.write_text('[carpark_source]\nhost=CONFIGURAR_HOST_SUPABASE\nport=5432\ndbname=postgres\nuser=CONFIGURAR_USUARIO_LECTURA\npassword=CONFIGURAR_PASSWORD_LOCALMENTE\nsslmode=verify-full\nsslrootcert=/certificates/supabase-ca.crt\nconnect_timeout=10\n')
 os.chmod(source, 0o600)
 snapshot = local / 'source-snapshot.json'
 if not snapshot.exists():

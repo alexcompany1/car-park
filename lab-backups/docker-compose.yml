@@ -118,6 +118,7 @@ services:
       - ./scripts:/lab/scripts:ro
       - ./backups:/backups
       - ./logs:/logs
+      - ./.local/certificates:/certificates:ro
     networks: [source]
     read_only: true
     tmpfs: ['/tmp:mode=1777']

@@ -25,3 +25,15 @@
 {"scenario": "datos_ficticios", "time": "2026-11-10T16:31:38.636242+00:00", "action": "test_passed", "test": "corrupt_backup_rejected"}
 {"scenario": "datos_ficticios", "time": "2026-11-10T16:31:39.976968+00:00", "action": "verification_passed", "backup": "backup-20261110t163129993140-a13e4eaa-local", "foreign_keys": 6, "tables": 6, "api": true, "plazas": 3}
 {"scenario": "datos_ficticios", "time": "2026-11-10T16:31:39.977603+00:00", "action": "test_passed", "test": "restore_failure_rolled_back"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:17:02.042236+00:00", "action": "backup_complete", "backup": "backup-20261110t171653363116-8841a197-source", "origin": "source", "counts": {"ciudades": 1, "direcciones": 13, "dispositivos": 0, "historico_ocupacion": 0, "plazas": 13, "zonas": 1}}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:18:24.753137+00:00", "action": "restore_complete", "backup": "backup-20261110t171653363116-8841a197-source", "transaction": "committed"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:18:39.251967+00:00", "action": "verification_passed", "backup": "backup-20261110t171653363116-8841a197-source", "foreign_keys": 6, "tables": 6, "api": true, "plazas": 13}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:16.071707+00:00", "action": "simulated_loss", "plazas": 0, "api_empty": true}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:17.500062+00:00", "action": "restore_complete", "backup": "backup-20261110t171653363116-8841a197-source", "transaction": "committed"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:19.279188+00:00", "action": "verification_passed", "backup": "backup-20261110t171653363116-8841a197-source", "foreign_keys": 6, "tables": 6, "api": true, "plazas": 13}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:20.385119+00:00", "action": "test_passed", "test": "operation_lock_rejected_second_holder"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:20.602930+00:00", "action": "test_passed", "test": "invalid_destination_marker_rejected"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:20.603559+00:00", "action": "test_passed", "test": "path_traversal_rejected"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:20.757666+00:00", "action": "test_passed", "test": "corrupt_backup_rejected"}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:21.981531+00:00", "action": "verification_passed", "backup": "backup-20261110t171653363116-8841a197-source", "foreign_keys": 6, "tables": 6, "api": true, "plazas": 13}
+{"scenario": "dump_remoto_supabase", "time": "2026-11-10T17:19:21.983176+00:00", "action": "test_passed", "test": "restore_failure_rolled_back"}

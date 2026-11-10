@@ -57,6 +57,16 @@ Edita localmente `.local/source-service.conf`. Obtén el host y el usuario del a
 
 Se recomienda un usuario PostgreSQL dedicado que pueda leer las seis tablas, secuencias y las filas permitidas por RLS. Su creación y concesión de permisos debe revisarse aparte en Supabase. El script solicita una sesión de solo lectura y verifica TLS y la versión 17 antes de exportar. `--enable-row-security` respeta lo que el usuario de origen puede leer, por lo que el alcance real depende de sus permisos.
 
+En Session pooler, un rol llamado `lector` se conecta como `lector.REFERENCIA_DEL_PROYECTO`, con su propia contraseña. Los permisos SQL se conceden a `lector`, sin ese sufijo. El archivo [source-reader.sql](scripts/source-reader.sql) configura lectura del catálogo con RLS y el modo de solo lectura por defecto. Se aplicó con autorización en este proyecto; en otros entornos requiere revisión del administrador y `lab.sh` no lo aplica. El pooler no propagó la opción de sesión enviada mediante `PGOPTIONS` durante el ensayo, por eso el exportador comprueba también el valor efectivo y cancela si está desactivado. El modo por defecto no sustituye a los permisos: el rol tampoco debe tener privilegios de escritura.
+
+Para verificar el certificado del servidor, descarga la CA desde **Database settings → SSL → Download certificate** y guárdala en `.local/certificates/supabase-ca.crt`. El enlace que utiliza el panel oficial también permite descargarla desde la raíz del repositorio:
+
+```bash
+curl --fail --location --proto '=https' https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt -o lab-backups/.local/certificates/supabase-ca.crt
+```
+
+Mantén `sslmode=verify-full` y pon `sslrootcert=/certificates/supabase-ca.crt` en `source-service.conf`: esta es la ruta dentro del contenedor. Solo el exportador recibe esa carpeta de certificados. La descarga, la conexión con TLS verificado y la exportación remota mediante `lector` se probaron. El dump se restauró en Docker y se verificaron sus 13 plazas, las seis tablas y sus seis relaciones. El rol `lector` se crea sin login en el laboratorio para que se puedan restaurar las políticas que lo nombran.
+
 ```bash
 ./lab-backups/scripts/lab.sh backup-source
 ./lab-backups/scripts/lab.sh restore

@@ -41,7 +41,7 @@ La API tiene además una red puente para publicar el puerto de loopback. Docker 
 
 El manifiesto se obtiene del contenido del archivo de backup. Cada tabla incluye sus columnas, cantidad de filas y SHA-256 de sus filas COPY ordenadas. Así se evita comparar el dump con una consulta posterior del servidor que podría haber cambiado. La verificación exige seis claves foráneas y prueba una inserción inválida dentro de una transacción que se revierte.
 
-La instantánea JSON obtenida con el conector es una vía distinta. Recupera los datos del catálogo sobre el modelo reducido del laboratorio, sin afirmar que se ha exportado todo el DDL del origen. Los resultados indican qué vía se ejecutó realmente.
+La instantánea JSON obtenida con el conector es una vía distinta. Recupera los datos del catálogo sobre el modelo reducido del laboratorio, sin afirmar que se ha exportado todo el DDL del origen. Los resultados distinguen esa prueba inicial de la posterior copia remota real, que ya se ha ejecutado y restaurado. El rol remoto `lector` tiene políticas SELECT específicas para las seis tablas y lectura por defecto activada con autorización. En Docker se crea `lector` sin login para que se puedan reponer sus políticas.
 
 ## Fuentes oficiales
 

@@ -240,12 +240,21 @@ def restore(name, inject_failure=False):
         raise LabError('Versión de copia incompatible con este laboratorio.')
     sql = '''BEGIN;
 DO $$ BEGIN
+ -- Las políticas del dump remoto hacen referencia al rol lector.
+ -- En el laboratorio solo existe como destinatario de políticas, sin login.
+ IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname='lector') THEN
+  CREATE ROLE lector NOLOGIN;
+ END IF;
  IF to_regclass('public.plazas') IS NOT NULL THEN
   EXECUTE 'DROP FUNCTION IF EXISTS public.direccion(public.plazas)';
  END IF;
 END $$;
+-- Sustituye solo el catálogo de este laboratorio. Los nombres de las
+-- restricciones del esquema reducido y del dump remoto pueden ser distintos.
+DROP TABLE IF EXISTS public.historico_ocupacion, public.dispositivos,
+ public.plazas, public.direcciones, public.zonas, public.ciudades CASCADE;
 '''
-    sql += run('pg_restore', ['--clean', '--if-exists', '--no-owner', '--no-privileges', '--no-tablespaces', '--file=-', str(path / 'archive.dump')])
+    sql += run('pg_restore', ['--no-owner', '--no-privileges', '--no-tablespaces', '--file=-', str(path / 'archive.dump')])
     sql += (SCRIPTS / 'post-restore.sql').read_text()
     if inject_failure:
         sql += "\nDO $$ BEGIN RAISE EXCEPTION 'CARPARK_TEST_ROLLBACK'; END $$;\n"
