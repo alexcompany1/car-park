@@ -1,0 +1,7 @@
+# Plantilla. Revisar la ruta y validar backup-source antes de instalar con crontab -e.
+# Docker debe estar funcionando a la hora indicada. Añadir CARPARK_DOCKER_CONTEXT
+# solo si corresponde al Docker Desktop del equipo.
+# Todos los días a las 20:15, en la zona horaria del portátil:
+15 20 * * * cd /RUTA/AL/REPOSITORIO && CARPARK_DOCKER_CONTEXT=desktop-linux ./lab-backups/scripts/lab.sh backup-source >> ./lab-backups/logs/cron.log 2>&1
+# El bloqueo de operaciones evita trabajos simultáneos.
+# Mantener acceso al log y comprobar regularmente la antigüedad de la última copia.
