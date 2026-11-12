@@ -25,6 +25,12 @@ html{scroll-padding-top:96px}section[id]{scroll-margin-top:96px}
 .feature{position:relative;background:linear-gradient(145deg,#fff,#f2f7ff)}.feature p{color:#536781}.feature h3{font-size:17px}.feature-icon{font-weight:800}
 a:focus-visible,button:focus-visible{outline:3px solid #2b8cff;outline-offset:4px}
 @media(max-width:650px){html{scroll-padding-top:82px}section[id]{scroll-margin-top:82px}.stats{grid-template-columns:1fr;gap:10px}.stat{padding:18px;align-items:center;gap:16px}.stat strong{font-size:30px}.stat span{font-size:13px;margin-top:4px}.stat small{font-size:11px}.stat-icon{width:46px;height:46px;font-size:23px}.toolbar{padding:12px;gap:12px}.search{min-width:0}.search input{font-size:14px}.toolbar .filter-check{flex-basis:100%}.panel-title{flex-wrap:wrap;padding:15px}.map-stage{margin:0 10px}.nav-cta{white-space:nowrap}}
+.legal-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 24px;margin-top:19px;padding-top:18px;border-top:1px solid #ffffff24}.legal-link{border:0;background:transparent;color:#d4e1f2;font-size:12px;text-decoration:underline;text-underline-offset:4px;padding:6px 0}.legal-link:hover{color:#fff}
+.cookie-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:min(1110px,calc(100% - 32px));z-index:1500;background:#fff;border:1px solid #cddff5;border-radius:18px;padding:22px 25px;box-shadow:0 14px 60px #071b3f40;display:flex;gap:24px;align-items:center}.cookie-banner[hidden]{display:none}.cookie-copy{flex:1;min-width:0}.cookie-copy strong{display:block;font-size:17px;margin-bottom:7px;color:#102642}.cookie-copy p{font-size:12px;line-height:1.65;color:#526880;margin:0}.cookie-inline{border:0;background:transparent;padding:0;color:#125fc4;text-decoration:underline;font-size:inherit;cursor:pointer}.cookie-actions{display:flex;flex-wrap:wrap;gap:9px;max-width:390px}.cookie-action{border:1px solid #bfd2ed;background:#edf4ff;color:#114f9f;font-weight:750;font-size:12px;border-radius:9px;padding:12px 15px;min-height:44px;cursor:pointer}.cookie-action:hover{background:#dceaff;border-color:#78a9ea}.cookie-actions .cookie-action{flex:1;white-space:nowrap}.cookie-actions .cookie-config{flex-basis:100%;background:#fff}
+.legal-dialog{width:min(760px,calc(100% - 28px));max-height:85vh;margin:auto;padding:0;border:1px solid #d6e3f3;border-radius:20px;background:#fff;color:#142540;box-shadow:0 22px 100px #06142d55}.legal-dialog::backdrop{background:#061831a6;backdrop-filter:blur(3px)}.legal-top{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:22px 26px;border-bottom:1px solid #e3eaf4}.legal-top h2{font-size:22px;margin:0;letter-spacing:-.5px}.legal-close{border:1px solid #dae4f0;background:#f3f7fc;color:#29415f;width:38px;height:38px;border-radius:10px;font-size:24px;flex:none}.legal-body{padding:10px 26px 26px;font-size:14px;line-height:1.8}.legal-body h3{font-size:16px;margin:23px 0 6px}.legal-body p{margin:8px 0;color:#50647e}.legal-body a{color:#145fbd;text-decoration:underline}.legal-date{font-size:12px;color:#70839b}.legal-note{background:#f0f6ff;border-left:3px solid #1278f8;border-radius:6px;padding:12px 15px}.cookie-setting{display:flex;align-items:flex-start;gap:14px;border:1px solid #dce6f3;border-radius:12px;padding:16px;margin:14px 0}.cookie-setting input{accent-color:#1278f8;width:20px;height:20px;margin-top:4px;flex:none}.cookie-setting strong{display:block}.cookie-setting small{display:block;color:#60748b;line-height:1.6}.legal-table-wrap{overflow:auto}.legal-table{width:100%;border-collapse:collapse;font-size:12px;margin:15px 0}.legal-table th,.legal-table td{padding:11px;text-align:left;border:1px solid #e1e9f2;vertical-align:top}.legal-table th{background:#edf4ff}.legal-table code{overflow-wrap:anywhere}.legal-bottom{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.legal-bottom button{flex:1}
+@media(max-width:700px){.cookie-banner{bottom:10px;padding:18px;gap:14px;flex-direction:column;align-items:stretch;max-height:70vh;overflow:auto}.cookie-actions{max-width:none}.legal-top{padding:18px}.legal-top h2{font-size:19px}.legal-body{padding:8px 18px 22px}.legal-links{gap:8px 18px}}
+
+
 </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -58,7 +64,43 @@ a:focus-visible,button:focus-visible{outline:3px solid #2b8cff;outline-offset:4p
  <section class="features" id="como-funciona"><div class="shell"><div class="center-head"><span class="section-overline">ASÍ DE SENCILLO</span><h2>Cómo usar CarPark</h2><p>Busca un tramo, consulta sus datos y abre la ruta para llegar.</p></div><div class="feature-grid"><div class="feature"><span class="feature-icon">⌕</span><h3>1. Busca en El Masnou</h3><p>Pulsa «Ver mapa» y escribe el nombre de una calle en el buscador. Verás los tramos que coinciden tanto en la lista como en el mapa real de OpenStreetMap. Puedes acercar el mapa con + y alejarlo con −.</p></div><div class="feature"><span class="feature-icon">⌖</span><h3>2. Selecciona un tramo</h3><p>Pulsa un marcador, una línea del mapa o una tarjeta de la lista para abrir sus detalles. «Sin datos de ocupación» significa que no sabemos si hay sitio libre. Un tramo representa una parte de una calle, no una plaza individual.</p></div><div class="feature"><span class="feature-icon">↗</span><h3>3. Consulta la ruta</h3><p>En el detalle, pulsa «Cómo llegar» para abrir la ubicación del tramo en Google Maps y calcular tu ruta. También puedes pulsar «Guardar» para marcarlo como favorito en este navegador. CarPark no reserva plazas ni garantiza disponibilidad.</p></div></div></div></section>
  <section class="shell contact" id="contacto"><div><span class="section-overline">PROYECTO CARPARK</span><h2>Una forma más inteligente de aparcar.</h2><p>Ubicaciones de estacionamiento publicadas por SUMEM. Puedes consultar los tramos y guardar favoritos; la ocupación se mostrará cuando exista una fuente de medición.</p></div><a href="#mapa" class="btn primary">Ver mapa</a></section>
 </main>
-<footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Fuente: SUMEM / Google My Maps · Ocupación desconocida</span></div></footer>
+<footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Fuente: SUMEM / Google My Maps · Ocupación desconocida</span></div><div class="shell legal-links" aria-label="Información legal"><button type="button" class="legal-link" data-legal="privacy">Privacidad</button><button type="button" class="legal-link" data-legal="cookies">Política de cookies</button><button type="button" class="legal-link" data-legal="settings">Configurar cookies</button></div></footer>
+
+<aside class="cookie-banner" id="cookieBanner" aria-label="Cookies y privacidad" hidden>
+ <div class="cookie-copy"><strong>Tu privacidad, tú decides</strong><p>No añadimos cookies de publicidad ni analítica. Guardamos tu elección y, si lo aceptas, tus favoritos en este navegador. El mapa carga recursos de OpenStreetMap y Leaflet desde servicios externos. <button class="cookie-inline" data-legal="privacy">Privacidad</button> · <button class="cookie-inline" data-legal="cookies">Más sobre cookies</button>.</p></div>
+ <div class="cookie-actions"><button class="cookie-action" id="acceptCookies">Aceptar preferencias</button><button class="cookie-action" id="rejectCookies">Rechazar opcionales</button><button class="cookie-action cookie-config" data-legal="settings">Configurar</button></div>
+</aside>
+<dialog class="legal-dialog" id="legalDialog" aria-labelledby="legalTitle">
+ <div class="legal-top"><h2 id="legalTitle">Privacidad</h2><button type="button" class="legal-close" id="closeLegal" aria-label="Cerrar información legal">×</button></div>
+ <div class="legal-body">
+  <section id="privacyPanel" hidden>
+   <p class="legal-date">Información sobre CarPark · Actualizada el 10 de noviembre de 2026</p>
+   <h3>Sobre CarPark</h3><p>CarPark es un proyecto académico para consultar tramos de estacionamiento en El Masnou. La web consulta la API de CarPark, alojada en Vercel, para obtener los tramos del catálogo almacenado en Supabase. Esta versión no incluye registro, formularios de contacto ni pagos. La ocupación solo se muestra cuando existen mediciones.</p>
+   <h3>Qué información se utiliza</h3><p>Las búsquedas y los filtros se procesan en tu navegador. No solicitamos tu nombre, correo ni ubicación GPS. Los favoritos contienen identificadores de tramos y solo se conservan entre visitas si activas las preferencias opcionales.</p>
+   <h3>Consulta de datos y recursos externos</h3><p>Las consultas del catálogo pasan por el servidor de CarPark en Vercel y la base de datos de Supabase. Estos servicios procesan los datos técnicos necesarios para responder a las peticiones. Los favoritos y las preferencias se guardan en tu navegador y no se envían en las consultas del catálogo.</p><p>Para mostrar el mapa, tu navegador se conecta a OpenStreetMap; para cargar Leaflet, a unpkg. Estos proveedores reciben los datos técnicos de la conexión, como la dirección IP, el navegador y el recurso solicitado. La selección de calles en el mapa determina qué imágenes se solicitan. Estas conexiones se realizan al cargar el mapa y no dependen de la opción de guardar favoritos.</p><p>Al pulsar «Cómo llegar», se abre Google Maps con las coordenadas del tramo seleccionado. Google aplica sus propias condiciones y política de privacidad. No enviamos una posición GPS tuya.</p>
+   <p><a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">Privacidad de OpenStreetMap</a> · <a href="https://unpkg.com" target="_blank" rel="noopener noreferrer">Información de unpkg</a> · <a href="https://policies.google.com/privacy?hl=es" target="_blank" rel="noopener noreferrer">Privacidad de Google</a></p>
+   <h3>Conservación y control</h3><p>Tu elección sobre preferencias caduca a los 180 días y se comprueba al abrir la web. Los favoritos se mantienen hasta que los elimines, rechaces las preferencias o borres los datos del navegador. Puedes cambiar tu elección en «Configurar cookies», al pie de la página.</p><p>Sin permiso para conservar favoritos, puedes seguir guardándolos temporalmente mientras esta página permanezca abierta. No instalamos herramientas de seguimiento ni creamos perfiles publicitarios.</p>
+   <h3>Cómo eliminar tus datos locales</h3><p>Abre «Configurar cookies» y pulsa «Borrar mis datos locales» para eliminar los favoritos y la elección guardada de CarPark. También puedes borrar los datos de este sitio desde tu navegador. Las peticiones ya enviadas a proveedores externos no se eliminan con esta acción.</p>
+  </section>
+  <section id="cookiesPanel" hidden>
+   <p class="legal-date">Cookies y almacenamiento del navegador · 10 de noviembre de 2026</p>
+   <p>El código de CarPark no crea cookies HTTP propias. Utiliza <strong>localStorage</strong>, un almacenamiento del navegador distinto de las cookies, para estas funciones:</p>
+   <div class="legal-table-wrap"><table class="legal-table"><thead><tr><th>Elemento</th><th>Finalidad</th><th>Duración</th></tr></thead><tbody><tr><td><code>carpark_privacy_v1</code></td><td>Recordar si permites conservar favoritos. Se guarda al elegir.</td><td>180 días; caducidad comprobada al abrir la web.</td></tr><tr><td><code>carpark_favorites</code></td><td>Conservar los tramos favoritos. Opcional, solo si lo permites.</td><td>Hasta su eliminación o la retirada del permiso; se retira al comprobar una elección caducada.</td></tr></tbody></table></div>
+   <p>No añadimos servicios de publicidad o medición de audiencia. Los servicios externos del mapa y de la librería reciben peticiones de red y pueden utilizar sus propios mecanismos técnicos o de caché, sujetos a sus políticas. «Rechazar opcionales» desactiva la conservación de favoritos; no bloquea las conexiones necesarias para mostrar el mapa.</p>
+   <h3>Aceptar, rechazar o cambiar</h3><p>Puedes aceptar o rechazar las preferencias desde el aviso inicial, sin impedir la consulta del mapa. Reabre los ajustes desde «Configurar cookies» para cambiar la decisión. Si tu navegador impide el almacenamiento, la elección solo se aplica mientras la página esté abierta.</p>
+   <button class="cookie-action" data-legal="settings">Abrir configuración</button>
+  </section>
+  <section id="settingsPanel" hidden>
+   <p>Elige qué puede conservar CarPark en este navegador. No usamos publicidad ni analítica.</p>
+   <label class="cookie-setting"><input type="checkbox" checked disabled><span><strong>Recordar tu elección</strong><small>Necesario para aplicar tus preferencias. No identifica a una persona ni se envía a nuestro servidor.</small></span></label>
+   <label class="cookie-setting"><input type="checkbox" id="allowFavorites"><span><strong>Conservar favoritos entre visitas</strong><small>Opcional. Si lo desactivas, se borran los favoritos guardados y los nuevos solo duran mientras esta página está abierta.</small></span></label>
+   <p class="legal-note">El mapa y sus recursos externos se cargan para prestar el servicio. Esta selección controla el almacenamiento local de favoritos.</p>
+   <div class="legal-bottom"><button class="cookie-action" id="saveCookies">Guardar selección</button><button class="cookie-action" id="rejectSettings">Rechazar opcionales</button></div>
+   <div class="legal-bottom"><button class="cookie-action" id="clearPrivacy">Borrar mis datos locales</button></div>
+  </section>
+ </div>
+</dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -93,9 +135,33 @@ function drawMarkers(matching){
 }
 function fitMap(){if(map && markerLayer.getLayers().length)map.fitBounds(markerLayer.getBounds(),{padding:[45,45],maxZoom:17});}
 
-let favorites=[];
-try { const saved=JSON.parse(localStorage.getItem('carpark_favorites') || '[]'); if(Array.isArray(saved)) favorites=saved.filter(id=>typeof id==='string'); } catch {}
-function persist(){try{localStorage.setItem('carpark_favorites',JSON.stringify(favorites));}catch{}}
+const consentKey='carpark_privacy_v1';
+const consentTTL=180*24*60*60*1000;
+let privacyChoice=null, favorites=[];
+try {
+ const saved=JSON.parse(localStorage.getItem(consentKey)||'null');
+ if(saved?.version===1 && typeof saved.favorites==='boolean' && Number.isFinite(saved.savedAt) && Date.now()-saved.savedAt>=0 && Date.now()-saved.savedAt<consentTTL)privacyChoice=saved;
+ else {localStorage.removeItem(consentKey);localStorage.removeItem('carpark_favorites');}
+ if(privacyChoice?.favorites){const list=JSON.parse(localStorage.getItem('carpark_favorites')||'[]');if(Array.isArray(list))favorites=list.filter(id=>typeof id==='string');}
+ else localStorage.removeItem('carpark_favorites');
+} catch {}
+function persist(){if(!privacyChoice?.favorites)return;try{localStorage.setItem('carpark_favorites',JSON.stringify(favorites));}catch{}}
+function choosePrivacy(allowed){
+ privacyChoice={version:1,favorites:allowed,savedAt:Date.now()};
+ try {localStorage.setItem(consentKey,JSON.stringify(privacyChoice));if(!allowed){localStorage.removeItem('carpark_favorites');favorites=[];}else persist();}catch{if(!allowed)favorites=[];}
+ $('cookieBanner').hidden=true;
+ if($('legalDialog').open)$('legalDialog').close();
+ render();toast(allowed?'Preferencias guardadas: favoritos activados':'Preferencias guardadas: solo lo necesario');
+}
+function openLegal(panel){
+ const names={privacy:'Política de privacidad',cookies:'Política de cookies',settings:'Configurar cookies'};
+ if(!names[panel])return;
+ $('legalTitle').textContent=names[panel];
+ ['privacy','cookies','settings'].forEach(name=>$(name+'Panel').hidden=name!==panel);
+ $('allowFavorites').checked=!!privacyChoice?.favorites;
+ if(!$('legalDialog').open)$('legalDialog').showModal();
+ $('legalDialog').scrollTop=0;
+}
 let toastTimer;
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2600);}
 function visibleSpots(){const q=$('search').value.trim().toLocaleLowerCase('es');return spots.filter(s=>(!$('freeOnly').checked||s.estado==='libre')&&(`${s.id} ${s.nombre || ''} ${s.direccion || ''} ${s.zona || ''}`.toLocaleLowerCase('es').includes(q)));}
@@ -143,9 +209,22 @@ $('search').addEventListener('input',render);$('freeOnly').addEventListener('cha
 $('simulateBtn').addEventListener('click',loadSpots);
 $('resetBtn').addEventListener('click',()=>{$('search').value='';$('freeOnly').checked=false;selected=null;render();fitMap();});
 $('closeDetail').addEventListener('click',()=>{selected=null;render();});
-$('favoriteBtn').addEventListener('click',()=>{if(!selected)return;favorites=favorites.includes(selected)?favorites.filter(id=>id!==selected):[...favorites,selected];persist();render();toast('Favoritos actualizados');});
+$('favoriteBtn').addEventListener('click',()=>{if(!selected)return;favorites=favorites.includes(selected)?favorites.filter(id=>id!==selected):[...favorites,selected];persist();render();toast(privacyChoice?.favorites?'Favoritos actualizados':'Favorito de esta sesión. Activa su conservación en Configurar cookies.');});
 $('menuBtn').addEventListener('click',()=>{const open=$('navlinks').classList.toggle('open');$('menuBtn').setAttribute('aria-expanded',String(open));});
 document.querySelectorAll('.navlinks a').forEach(link=>link.addEventListener('click',()=>{$('navlinks').classList.remove('open');$('menuBtn').setAttribute('aria-expanded','false');}));
+document.querySelectorAll('[data-legal]').forEach(button=>button.addEventListener('click',()=>openLegal(button.dataset.legal)));
+$('closeLegal').addEventListener('click',()=>$('legalDialog').close());
+$('acceptCookies').addEventListener('click',()=>choosePrivacy(true));
+$('rejectCookies').addEventListener('click',()=>choosePrivacy(false));
+$('rejectSettings').addEventListener('click',()=>choosePrivacy(false));
+$('saveCookies').addEventListener('click',()=>choosePrivacy($('allowFavorites').checked));
+$('clearPrivacy').addEventListener('click',()=>{
+ try{localStorage.removeItem(consentKey);localStorage.removeItem('carpark_favorites');}catch{}
+ privacyChoice=null;favorites=[];render();$('legalDialog').close();$('cookieBanner').hidden=false;
+ toast('Datos locales de CarPark eliminados');
+});
+$('cookieBanner').hidden=privacyChoice!==null;
+
 loadSpots();
 
 </script>
