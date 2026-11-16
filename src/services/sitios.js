@@ -32,7 +32,8 @@ function getClient() {
   return client;
 }
 
-function mapPlaza({ id, estado_actual, direccion, latitud, longitud, ultima_actualizacion, zonas }) {
+function mapPlaza({ id, estado_actual, direcciones, latitud, longitud, ultima_actualizacion, zonas }) {
+  const direccion = direcciones?.nombre;
   const [estado, texto] = estados[estado_actual] || estados.unknown;
   return {
     id, estado,
@@ -52,7 +53,7 @@ async function getSitios({ zona } = {}) {
   const size = 1000;
   for (let start = 0; ; start += size) {
     let query = getClient().from('plazas')
-      .select('id,estado_actual,direccion,latitud,longitud,ultima_actualizacion,zonas!inner(nombre)').order('id').range(start, start + size - 1);
+      .select('id,estado_actual,direcciones(nombre),latitud,longitud,ultima_actualizacion,zonas!inner(nombre)').order('id').range(start, start + size - 1);
     if (zona) query = query.eq('zonas.nombre', zona);
     const { data, error } = await query;
     if (error) throw error;

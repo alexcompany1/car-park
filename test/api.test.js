@@ -60,7 +60,7 @@ test('Una base de datos vacía devuelve una lista vacía; un fallo devuelve 503 
 });
 
  test('La API conserva ubicación y zona y convierte coordenadas numéricas', () => {
-  const result = mapPlaza({ id: 'CP-001', estado_actual: 'free', direccion: 'Calle 1', latitud: '41.3', longitud: '2.1', zonas: { nombre: 'Centro' }, ultima_actualizacion: '2026-11-03T10:00:00Z' });
+  const result = mapPlaza({ id: 'CP-001', estado_actual: 'free', direcciones: { nombre: 'Calle 1' }, latitud: '41.3', longitud: '2.1', zonas: { nombre: 'Centro' }, ultima_actualizacion: '2026-11-03T10:00:00Z' });
   assert.equal(result.latitud, 41.3);
   assert.equal(result.longitud, 2.1);
   assert.equal(result.zona, 'Centro');
@@ -92,7 +92,7 @@ test('Los tramos reales tienen nombre, geometría verificable y ocupación desco
   assert.equal(Object.keys(catalog).length,13);
   for (const [id,source] of Object.entries(catalog)) {
     assert.ok(id.length<=20);
-    const result=mapPlaza({id,estado_actual:'unknown',direccion:'Zona blava carrer Navarra',latitud:41.4813652,longitud:2.3174688,zonas:{nombre:'El Masnou - zona blava'}});
+    const result=mapPlaza({id,estado_actual:'unknown',direcciones:{nombre:'Zona blava carrer Navarra'},latitud:41.4813652,longitud:2.3174688,zonas:{nombre:'El Masnou - zona blava'}});
     assert.equal(result.nombre,'Zona blava carrer Navarra');
     assert.equal(result.tipo_ubicacion,'tramo');
     assert.equal(result.estado,'desconocido');
