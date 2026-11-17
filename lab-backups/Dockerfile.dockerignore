@@ -15,3 +15,6 @@
 !lab-backups/
 !lab-backups/scripts/
 !lab-backups/scripts/api-entrypoint.sh
+
+
+!index.html

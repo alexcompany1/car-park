@@ -1,0 +1,347 @@
+[
+  {
+    "id": "EM-ZB-PUERTO-RICO",
+    "nombre": "Zona blava · Puerto Rico",
+    "direccion": "Puerto Rico",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.481523233333334,
+    "longitud": 2.3284119000000003,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3269314,
+          41.481197
+        ],
+        [
+          2.328723,
+          41.4815849
+        ],
+        [
+          2.3295813,
+          41.4817878
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-PERE-GRAU",
+    "nombre": "Zona blava · Pere Grau",
+    "direccion": "Pere Grau",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.480202399999996,
+    "longitud": 2.32165,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3209285,
+          41.4800195
+        ],
+        [
+          2.3223715,
+          41.4803853
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-SANT-FELIP",
+    "nombre": "Zona blava · St Felip",
+    "direccion": "St Felip",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.48032096666666,
+    "longitud": 2.320775633333333,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3192387,
+          41.4798869
+        ],
+        [
+          2.3207837,
+          41.4803491
+        ],
+        [
+          2.3223045,
+          41.4807269
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-MESTRES-VILLA",
+    "nombre": "Zona blava · Mestres Villà",
+    "direccion": "Mestres Villà",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.48038125,
+    "longitud": 2.31945335,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3190242,
+          41.4802647
+        ],
+        [
+          2.3198825,
+          41.4804978
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-SANT-MIQUEL",
+    "nombre": "Zona blava · St Miquel",
+    "direccion": "St Miquel",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.48108855,
+    "longitud": 2.3175382,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3187559,
+          41.481402
+        ],
+        [
+          2.3163205,
+          41.4807751
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-PINTOR-DOMENEC",
+    "nombre": "Zona blava · Pintor Domènech",
+    "direccion": "Pintor Domènech",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.4825414,
+    "longitud": 2.3191099,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3192494,
+          41.482891
+        ],
+        [
+          2.3189704,
+          41.4821918
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-JOAN-MARAGALL",
+    "nombre": "Zona blava · Joan Maragall",
+    "direccion": "Joan Maragall",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.481061350000004,
+    "longitud": 2.32699105,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3269314,
+          41.481197
+        ],
+        [
+          2.3270507,
+          41.4809257
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-CAN-GAIO",
+    "nombre": "Zona blava · Torrent de Can Gaio",
+    "direccion": "Torrent de Can Gaio",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.4833113,
+    "longitud": 2.3285279,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3281296,
+          41.4832108
+        ],
+        [
+          2.3289262,
+          41.4834118
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-PLACA-OCATA",
+    "nombre": "Zona blava · Plaça Ocata",
+    "direccion": "Plaça Ocata",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.48117535,
+    "longitud": 2.32225695,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3216226,
+          41.4810226
+        ],
+        [
+          2.3228913,
+          41.4813281
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-PRIMER-MAIG",
+    "nombre": "Zona blava · St. Miquel/Primer de Maig",
+    "direccion": "St. Miquel/Primer de Maig",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.4794449,
+    "longitud": 2.3110095999999998,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3104921,
+          41.4791896
+        ],
+        [
+          2.3113397,
+          41.4794187
+        ],
+        [
+          2.311197,
+          41.4797264
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-AMADEU-I",
+    "nombre": "Zona blava · Amadeu I",
+    "direccion": "Amadeu I",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.47912803333333,
+    "longitud": 2.305312966666667,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3051386,
+          41.4793712
+        ],
+        [
+          2.3052996,
+          41.4790959
+        ],
+        [
+          2.3055007,
+          41.478917
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-NAVARRA",
+    "nombre": "Zona blava · Navarra",
+    "direccion": "Navarra",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.48136323333333,
+    "longitud": 2.3174595,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3187452,
+          41.4817075
+        ],
+        [
+          2.3174416,
+          41.4813579
+        ],
+        [
+          2.3161917,
+          41.4810243
+        ]
+      ]
+    }
+  },
+  {
+    "id": "EM-ZB-ROMA-FABRA",
+    "nombre": "Zona blava · Romà Fabra",
+    "direccion": "Romà Fabra",
+    "zona": "El Masnou parquings",
+    "estado": "desconocido",
+    "latitud": 41.481434300000004,
+    "longitud": 2.3159564,
+    "ultima_actualizacion": null,
+    "tipo_ubicacion": "tramo",
+    "fuente_url": "https://www.google.com/maps/d/viewer?mid=1kat7R6rgPvW5CaKGRf9cbbzaefyLxbc",
+    "geometria": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          2.3163205,
+          41.4807751
+        ],
+        [
+          2.3155923,
+          41.4820935
+        ]
+      ]
+    }
+  }
+]

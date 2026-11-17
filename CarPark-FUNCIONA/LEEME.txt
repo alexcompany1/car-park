@@ -1,9 +1,11 @@
-CARPARK - UBICACIONES REALES DE EL MASNOU
+CARPARK — NUEVO MODELO VISUAL
 
-Ejecuta npm ci y npm start desde la raíz del proyecto.
-Configura .env con Supabase y abre http://localhost:3000.
-Se muestran 13 tramos reales de zona blava del mapa publicado por SUMEM.
-El mapa de calles requiere Internet. Los tramos no son plazas individuales.
-La ocupación es desconocida: no hay sensores ni disponibilidad en tiempo real.
-Actualizar consulta Supabase y los favoritos se guardan en el navegador.
-Fuentes y cambios: docs/el-masnou-ubicaciones-reales.md.
+Desde la raíz del repositorio: npm ci y npm start.
+Abre http://localhost:3000. La API necesita las variables de Supabase.
+La portada y la API son las de main; no se sustituyen por datos ficticios.
+
+DATOS DEL PROYECTO: consulta GET /api/sitios cada 5 segundos, sin Actualizar.
+DEMO VISUAL: cambios locales claramente identificados, sin escribir en Supabase.
+Mapa con 13 marcadores P y distintivos verde/rojo. No se dibujan líneas.
+
+MQTT local completo: consulta ../CarPark-MQTT-Local/LEEME.txt.
