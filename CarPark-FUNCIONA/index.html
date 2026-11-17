@@ -188,18 +188,22 @@ $('favoriteBtn').addEventListener('click',()=>{if(!selected)return;favorites=fav
 $('menuBtn').addEventListener('click',()=>{const open=$('navlinks').classList.toggle('open');$('menuBtn').setAttribute('aria-expanded',String(open));});
 document.querySelectorAll('.navlinks a').forEach(link=>link.addEventListener('click',()=>{$('navlinks').classList.remove('open');$('menuBtn').setAttribute('aria-expanded','false');}));
 document.querySelectorAll('[data-legal]').forEach(button=>button.addEventListener('click',()=>openLegal(button.dataset.legal)));
-$('closeLegal').addEventListener('click',()=>$('legalDialog').close());
-$('acceptCookies').addEventListener('click',()=>choosePrivacy(true));
-$('rejectCookies').addEventListener('click',()=>choosePrivacy(false));
-$('rejectSettings').addEventListener('click',()=>choosePrivacy(false));
-$('saveCookies').addEventListener('click',()=>choosePrivacy($('allowFavorites').checked));
-$('clearPrivacy').addEventListener('click',()=>{
+$('closeLegal')?.addEventListener('click', () => $('legalDialog')?.close());
+$('acceptCookies')?.addEventListener('click', () => choosePrivacy(true));
+$('rejectCookies')?.addEventListener('click', () => choosePrivacy(false));
+$('rejectSettings')?.addEventListener('click', () => choosePrivacy(false));
+$('saveCookies')?.addEventListener('click', () => choosePrivacy($('allowFavorites')?.checked ?? false));
+$('clearPrivacy')?.addEventListener('click',()=>{
  try{localStorage.removeItem(consentKey);localStorage.removeItem('carpark_favorites');}catch{}
- privacyChoice=null;favorites=[];render();$('legalDialog').close();$('cookieBanner').hidden=false;
+ privacyChoice=null;favorites=[];render();
+ $('legalDialog')?.close();
+ const banner=$('cookieBanner');
+ if(banner)banner.hidden=false;
  toast('Datos locales de CarPark eliminados');
 });
-$('cookieBanner').hidden=privacyChoice!==null;
-
+if ($('cookieBanner')) {
+  $('cookieBanner').hidden = privacyChoice !== null;
+}
 loadSpots();
 
 </script>
