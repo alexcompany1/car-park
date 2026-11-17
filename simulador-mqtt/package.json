@@ -1,0 +1,16 @@
+{
+  "name": "carpark-simulador-mqtt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simulador de estados libre/ocupado para CarPark (Sprint 2, Marc)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node simulador.js",
+    "escuchar": "node escuchar.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "mqtt": "^5.0.0"
+  }
+}

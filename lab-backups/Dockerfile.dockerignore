@@ -1,0 +1,17 @@
+**
+!package.json
+!package-lock.json
+!server.js
+!src/
+!src/**
+!api/
+!api/**
+!CarPark-FUNCIONA/
+!CarPark-FUNCIONA/**
+!css/
+!css/**
+!js/
+!js/**
+!lab-backups/
+!lab-backups/scripts/
+!lab-backups/scripts/api-entrypoint.sh

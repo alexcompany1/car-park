@@ -1,11 +1,9 @@
-CARPARK - VERSIÓN CORREGIDA (UN SOLO ARCHIVO)
+CARPARK - UBICACIONES REALES DE EL MASNOU
 
-1. Abre la carpeta CarPark-FUNCIONA.
-2. Haz doble clic en index.html para abrirlo con Google Chrome o Microsoft Edge.
-
-Incluye HTML, CSS, JavaScript y fotografías integrados dentro de index.html.
-No necesitas Internet, Node.js ni servidor para ver la web y sus fotos.
-Las plazas y sus estados son datos de demostración (no hay conexión MQTT ni backend).
-El enlace externo de Google Maps necesita conexión a Internet.
-
-Esta carpeta se añadió a la rama pau sin modificar la web principal ni otras carpetas del proyecto.
+Ejecuta npm ci y npm start desde la raíz del proyecto.
+Configura .env con Supabase y abre http://localhost:3000.
+Se muestran 13 tramos reales de zona blava del mapa publicado por SUMEM.
+El mapa de calles requiere Internet. Los tramos no son plazas individuales.
+La ocupación es desconocida: no hay sensores ni disponibilidad en tiempo real.
+Actualizar consulta Supabase y los favoritos se guardan en el navegador.
+Fuentes y cambios: docs/el-masnou-ubicaciones-reales.md.

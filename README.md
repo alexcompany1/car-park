@@ -1,33 +1,41 @@
 # CarPark
 
-Proyecto académico de aparcamiento inteligente.
+CarPark muestra los tramos de aparcamiento de la zona azul de El Masnou. El mapa consulta la API de Express, que lee los datos de Supabase. Los 13 tramos representan ubicaciones publicadas por SUMEM. Su ocupación aún es desconocida.
 
-## Cómo ejecutar
-1. Abre esta carpeta en Visual Studio Code.
-2. Instala la extensión Live Server.
-3. Abre `index.html` y selecciona **Open with Live Server**.
-4. Mantén conexión a Internet para cargar Leaflet, OpenStreetMap y las fuentes web.
+[Ver la web publicada en Vercel](https://car-park-snowy.vercel.app/#mapa)
 
-## Funciones incluidas
-- Mapa interactivo de Barcelona con marcadores.
-- Búsqueda por código, calle, zona o estado.
-- Filtros por disponibilidad y zona.
-- Resumen de plazas libres, ocupadas y totales.
-- Panel de detalles y enlace para obtener indicaciones.
-- Botón para centrar el mapa en la ubicación del navegador.
+## Arranque en local
 
-## Estructura
-```
-car-park/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── app.js
-└── README.md
+Con Node.js 20 o posterior, instala las dependencias:
+
+```bash
+npm ci
 ```
 
-## Datos de demostración
-Las diez plazas, sus estados, distancias y horas de actualización están simulados en `js/app.js`. No representan disponibilidad real ni están conectados a sensores ESP32, MQTT o un backend. La geolocalización del navegador requiere permiso del usuario y un contexto seguro (por ejemplo, localhost mediante Live Server).
+Si todavía no tienes un archivo `.env`, créalo a partir de [`.env.example`](.env.example) y rellena `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY`. Después, arranca el servidor:
 
-Mapa: Leaflet + OpenStreetMap.
+```bash
+npm start
+```
+
+Abre [CarPark en local](http://localhost:3000/). El mapa usa Leaflet y OpenStreetMap y necesita conexión a Internet.
+
+## Dónde está cada cosa
+
+| Archivo o carpeta | Contenido |
+| --- | --- |
+| [CarPark-FUNCIONA/index.html](CarPark-FUNCIONA/index.html) | Web activa y mapa. Edita este archivo para cambiar la página principal. |
+| [server.js](server.js) y [src/app.js](src/app.js) | Arranque local y rutas de Express. |
+| [src/services/sitios.js](src/services/sitios.js) | Consulta a Supabase para `GET /api/sitios`. |
+| [api/](api/) | Entradas para Vercel. |
+| [test/](test/) | Pruebas de la API y de las rutas principales. |
+| [docs/](docs/) | Documentación, fuentes de los datos y notas de los sprints. |
+
+## Pruebas y documentación
+
+Ejecuta `npm test` para comprobar la API y las rutas. En el mapa, el botón **Actualizar** vuelve a consultar la API y los favoritos se guardan en el navegador.
+
+- [Coordinación del sprint 2](docs/COORDINACION_SPRINT_2.txt)
+- [Tramos de El Masnou, fuentes e importación](docs/el-masnou-ubicaciones-reales.md)
+- [Prototipo del sprint 1](docs/archivo/frontend-sprint-1.html). Se conserva como referencia junto con sus recursos en `css/` y `js/`.
+- [Notas del despliegue inicial](docs/archivo/notas-despliegue-inicial.txt)
