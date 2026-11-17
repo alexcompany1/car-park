@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/carpark-backup"
           snapshot="$RUNNER_TEMP/carpark-snapshot.git"
-          git clone --bare --no-local . "$snapshot"
+          git clone --mirror --no-local . "$snapshot"
 
           while IFS=' ' read -r ref sha; do
             branch="${ref#refs/remotes/origin/}"
