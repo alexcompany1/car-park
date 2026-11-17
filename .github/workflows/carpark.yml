@@ -15,19 +15,33 @@ permissions:
 jobs:
   tests:
     name: Pruebas de CarPark
-    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    if: |
+      (github.event_name == 'pull_request' && github.head_ref != 'main') ||
+      (github.event_name == 'workflow_dispatch' && github.ref_type == 'branch' && github.ref_name != 'main')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm test
+      - name: Arrancar el laboratorio con datos ficticios
+        run: |
+          ./lab-backups/scripts/lab.sh configure
+          ./lab-backups/scripts/lab.sh up
+      - name: Ejecutar las pruebas dentro de Docker
+        run: |
+          docker compose --project-name carpark-backup-lab \
+            --env-file lab-backups/.env -f lab-backups/docker-compose.yml \
+            run --rm -T --no-deps --entrypoint node \
+            --volume "$GITHUB_WORKSPACE/test:/app/test:ro" \
+            --volume "$GITHUB_WORKSPACE/simulador-mqtt:/app/simulador-mqtt:ro" \
+            api --test
+      - name: Verificar la web y la base de datos del laboratorio
+        run: |
+          curl --fail --silent --show-error http://127.0.0.1:3101/ --output /dev/null
+          ./lab-backups/scripts/lab.sh backup-local
+          ./lab-backups/scripts/lab.sh verify
 
   backup:
     name: Copia verificable del repositorio
