@@ -1,10 +1,12 @@
 const express = require('express');
 const path = require('node:path');
+const authConfig = require('../api/auth-config');
 const { getSitios } = require('./services/sitios');
 function createApp(loadSitios = getSitios) {
   const app = express();
   app.disable('x-powered-by');
 
+  app.get('/api/auth-config', authConfig);
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
   app.get('/api/sitios', async (req, res) => {
     res.set('Cache-Control', 'no-store');
