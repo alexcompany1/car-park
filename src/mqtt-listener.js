@@ -16,8 +16,10 @@ const TOPIC = 'carpark/sitios/estado';
 const ESCRIBIR = process.env.MQTT_WRITE_ENABLED === 'true';
 
 // Inicialmente solo permitimos actualizar este tramo de prueba.
-const TRAMO_PRUEBA = 'EM-ZB-NAVARRA';
+const tramos = require('./data/tramos-el-masnou.json');
+const TRAMOS_VALIDOS = new Set(Object.keys(tramos));
 
+console.log('Tramos MQTT disponibles:', TRAMOS_VALIDOS.size);
 let supabase = null;
 
 if (ESCRIBIR) {
@@ -57,12 +59,13 @@ cliente.on('message', async (topic, mensaje) => {
     const datos = JSON.parse(mensaje.toString());
 
     if (
-      datos.id !== TRAMO_PRUEBA ||
-      !['libre', 'ocupado'].includes(datos.estado)
-    ) {
-      console.log('Mensaje no permitido');
-      return;
-    }
+  typeof datos.id !== 'string' ||
+  !TRAMOS_VALIDOS.has(datos.id) ||
+  !['libre', 'ocupado'].includes(datos.estado)
+) {
+  console.log('Mensaje MQTT no permitido:', datos);
+  return;
+}
 
     console.log('Mensaje recibido:', datos);
 
@@ -81,7 +84,7 @@ cliente.on('message', async (topic, mensaje) => {
         estado_actual: nuevoEstado,
         ultima_actualizacion: new Date().toISOString()
       })
-      .eq('id', TRAMO_PRUEBA)
+      .eq('id', datos.id)
       .select('id, estado_actual');
 
     if (error) throw error;
