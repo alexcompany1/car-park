@@ -1,0 +1,103 @@
+CARPARK — FOTOS WEBP Y CONEXIÓN A LA API
+
+1. ABRIR ESTA COPIA
+Extrae todo el ZIP y abre ABRIR_WEB.bat. Deja la ventana negra abierta.
+La foto de portada ya está convertida a WebP dentro del HTML. También se
+incluye portada.webp por separado. Se conserva incrustada para que el
+iniciador original siga funcionando sin cambios. Las P de la lista son
+iconos, no fotografías. Las teselas del mapa las sirve OpenStreetMap.
+
+2. QUÉ VERSIÓN UTILIZAR
+Para ejecutar el backend, utiliza Node.js 24 LTS (Windows Installer .msi,
+x64 si tu Windows es x64). Descarga oficial: https://nodejs.org/es/download
+No hace falta Node.js para abrir la copia local con el BAT.
+El package.json consultado de la rama principal de CarPark indica:
+- Proyecto: 1.0.0.
+- Express: 5.3.0.
+- @supabase/supabase-js: 2.118.0.
+- dotenv: 18.0.9.
+Usa npm install en el repositorio: instala las dependencias ya declaradas.
+No es necesario migrar Express ni reinstalarlo por separado.
+La ruta existente es /api/sitios. El backend no declara una versión de
+API como /api/v1: no añadas /v1 porque esa ruta no existe en lo revisado.
+El mapa de esta web utiliza Leaflet 1.9.4.
+
+3. PREPARAR EL BACKEND DE ALEX
+Abre en Visual Studio Code la carpeta del repositorio car-park, donde
+están package.json, server.js y src. Abre Terminal > Nuevo terminal.
+Si no tienes el repositorio, descárgalo desde GitHub y extrae la carpeta.
+En esa raíz ejecuta:
+
+npm install
+
+Copia .env.example a un archivo llamado exactamente .env y rellena:
+
+SUPABASE_URL=https://TU-PROYECTO.supabase.co
+SUPABASE_PUBLISHABLE_KEY=TU-CLAVE-PUBLICABLE
+
+Alex debe facilitarte los valores del proyecto que ya utiliza el equipo.
+Estas variables se configuran en el backend, no dentro de index.html.
+No subas .env a GitHub. La base de datos necesita las tablas plazas y
+zonas, su relación, los datos y los permisos de lectura configurados.
+Usar una URL y una clave por sí solo no crea esas tablas ni sus datos.
+
+4. PONER ESTA WEB EN EL BACKEND
+Guarda una copia del HTML anterior antes de sustituirlo.
+Copia el index.html de este ZIP a:
+
+car-park/CarPark-FUNCIONA/index.html
+
+Abre ese HTML con Visual Studio Code. Busca con Ctrl+F:
+
+const API_URL = '';
+
+Cámbialo por:
+
+const API_URL = '/api/sitios';
+
+Guarda. Desde la raíz del repositorio ejecuta:
+
+npm start
+
+Abre http://localhost:3000
+En este modo, abre esa dirección; ABRIR_WEB.bat inicia otro servidor
+independiente que no incluye la API. Servir web y API desde el backend
+permite usar la misma dirección y evita tener que configurar CORS.
+
+5. COMPROBARLO
+Abre http://localhost:3000/health : debería mostrar {"status":"ok"}.
+Eso comprueba el servidor, no la conexión con la base de datos.
+Abre http://localhost:3000/api/sitios : debe mostrar un JSON con sitios.
+La respuesta que espera esta web tiene este formato:
+
+{"sitios":[{"id":"EM-ZB-PUERTO-RICO","nombre":"Puerto Rico","direccion":"Puerto Rico","zona":"El Masnou parquings","estado":"libre","latitud":41.481523,"longitud":2.328412,"ultima_actualizacion":"2026-11-12T14:00:00Z"}]}
+
+Este JSON es un ejemplo del formato, NO una medición real.
+Estados admitidos por la web: libre, ocupado, desconocido, reservado,
+sin_conexion. El backend traduce los estados de la base de datos.
+En la web debe aparecer API conectada. Pulsa Actualizar para consultar
+otra vez. No hay actualización automática ni conexión directa a MQTT.
+Si falla, la web muestra los 13 tramos locales como desconocidos y avisa.
+Un JSON con sitios: [] significa que la consulta no devolvió filas:
+comprueba datos y permisos, aunque el servidor no muestre error.
+
+6. CUANDO PUBLIQUÉIS LA WEB
+Si el servidor publica web y API juntos, conserva /api/sitios.
+Si los publicáis en dominios distintos, API_URL debe contener la URL
+HTTPS completa del backend más /api/sitios, y el backend debe permitir
+el origen de vuestra web mediante CORS. Lo mismo ocurre si usas el BAT
+para la web y el backend en el puerto 3000. La configuración revisada
+no incluye ese permiso CORS. La opción del apartado 4 es más sencilla.
+Una web publicada no debe apuntar a localhost: sería el PC del visitante.
+
+7. CÓMO EXPLICARLO EN LA EXPOSICIÓN
+La web hace una petición HTTP GET con fetch a /api/sitios. Express recibe
+la petición y consulta Supabase. Devuelve JSON; la web lee sitios y
+actualiza la lista, el mapa y los contadores. MQTT se integra a través
+del backend que recibe los mensajes y actualiza los datos. Conectar
+esta web a la API no demuestra que los sensores o MQTT estén integrados.
+
+La conexión real no se ha podido probar aquí con vuestro backend y
+vuestras credenciales. Se ha verificado el contrato en el código de la
+rama principal de https://github.com/alexcompany1/car-park, consultado
+el 12/11/2026. Una rama diferente puede tener rutas y versiones distintas.

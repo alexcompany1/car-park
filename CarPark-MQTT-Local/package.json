@@ -1,0 +1,18 @@
+{
+  "name": "carpark-el-masnou-mqtt",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "simulador": "node simulador.mjs",
+    "test": "node --test verificar.mjs",
+    "dev": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "mqtt": "5.14.1"
+  }
+}

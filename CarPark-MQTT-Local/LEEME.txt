@@ -1,0 +1,114 @@
+CARPARK VISUAL — VERSIÓN MEJORADA
+
+PARA VER LOS CAMBIOS ENSEGUIDA (Windows 11)
+1. Extrae TODO el ZIP.
+2. Abre ABRIR_DEMO.bat y deja su ventana abierta.
+3. Verás los tramos en verde y rojo. Uno cambia cada 3 segundos.
+4. Pulsa Pausar cambios para detenerlos.
+5. En Prueba tú, elige una calle y pulsa Poner libre o Poner ocupado.
+   Verás el cambio en el mapa, las tarjetas, el contador y el registro.
+La demo no necesita Node.js ni Mosquitto. Necesita Internet para el mapa.
+También puedes abrir VER_DEMO.html directamente; si el mapa no carga,
+usa ABRIR_DEMO.bat para servirlo por HTTP local.
+
+Los estados de la DEMO son simulados dentro del navegador. No pasan por MQTT.
+Los identificadores y las geometrías corresponden a los 13 tramos originales.
+
+PARA PROBAR MQTT DE VERDAD
+Usa ABRIR_WEB.bat y después INICIAR_SIMULADOR.bat, con Mosquitto funcionando.
+En la página selecciona Conexión MQTT. Requiere Node.js 20 o superior.
+No confundas Demo visual con MQTT conectado: el modo se muestra en la página.
+La demo no escribe en el broker ni modifica sus datos. Al volver a MQTT se
+restablecen los estados recibidos del servidor.
+
+QUÉ SE VE MEJOR
+- Cuatro contadores: total, libres, ocupados y sin confirmar.
+- Marcadores P con distintivo verde (libre) o rojo (ocupado).
+- Sin líneas de colores sobre las calles: un marcador por tramo.
+- Las 13 tarjetas con nombre de calle e identificador MQTT.
+- Resaltado de las tarjetas que acaban de cambiar.
+- Registro de los últimos seis cambios con hora, estado anterior y nuevo.
+- Demo automática, pausa, velocidad y controles manuales.
+
+CARPARK — TRAMOS REALES + ACTUALIZACIÓN MQTT
+
+QUÉ HA CAMBIADO
+- El simulador utiliza los 13 identificadores EM-ZB-... del mapa, en lugar de CP-001.
+- Los mensajes MQTT actualizan automáticamente las líneas, marcadores, lista,
+  contadores y detalle, sin pulsar Actualizar ni mover el zoom del mapa.
+- La web marca los mensajes del simulador como SIMULACIÓN. Los tramos son los
+  del archivo original; los estados simulados no son mediciones reales.
+
+PARA ABRIRLO EN WINDOWS
+1. Extrae TODO el ZIP. No ejecutes los archivos dentro del ZIP.
+2. Necesitas Node.js 20 o superior y un broker Mosquitto instalado.
+3. Abre una terminal y arranca el broker: mosquitto -v
+   Si ya está funcionando como servicio, no arranques una segunda instancia.
+4. Abre ABRIR_WEB.bat. La primera vez instala las dependencias con npm ci.
+   Mantén la ventana abierta. Si el navegador se abre demasiado pronto,
+   recarga una vez cuando aparezca 'CarPark: http://localhost:8080'.
+5. Abre INICIAR_SIMULADOR.bat. Cada 5 segundos publica los 13 estados y cambia
+   uno de ellos. Mira cómo cambian el mapa y la lista automáticamente.
+6. Cierra el simulador con Ctrl+C. Después de 60 segundos sin mensajes el
+   estado pasa a 'Sin conexión'. Al perder el broker también se marca así.
+
+PRUEBA MANUAL (terminal abierta en esta carpeta)
+Detén primero el simulador automático para evitar que sobrescriba tus pruebas.
+Mantén abiertos el broker y ABRIR_WEB.bat.
+
+npm run simulador -- --listar
+npm run simulador -- --tramo EM-ZB-PUERTO-RICO --estado libre
+npm run simulador -- --tramo EM-ZB-PUERTO-RICO --estado ocupado
+
+También se admite --plaza libre u ocupado, siempre con --tramo.
+Este nuevo proyecto usa 'npm run simulador' para publicar; 'npm start' abre
+el servidor de la web. No reemplaces a ciegas el package.json de otro proyecto.
+
+MENSAJES MQTT
+Broker por defecto: mqtt://127.0.0.1:1883
+Topic de ejemplo: carpark/elmasnou/tramos/EM-ZB-PUERTO-RICO/estado
+Payload de ejemplo (timestamp debe ser la hora actual):
+{"id":"EM-ZB-PUERTO-RICO","estado":"libre","origen":"simulador","timestamp":"2026-11-16T16:00:00.000Z"}
+Los sensores pueden usar origen "sensor". Se admiten libre/ocupado, solamente
+IDs del catálogo y un topic cuyo ID coincida. Los mensajes de más de 60 segundos,
+los mensajes anteriores al último recibido y los identificadores de demo se ignoran.
+No se retienen mensajes para evitar recuperar simulaciones viejas al abrir la web.
+
+CÓMO FUNCIONA
+simulador.mjs -> MQTT/Mosquitto -> server.mjs -> eventos SSE -> mapa
+El navegador abre /api/eventos y recibe los cambios. Si se pierde la conexión,
+se reconecta automáticamente y recibe el estado completo disponible.
+Si el servidor se reinicia, queda sin datos hasta recibir nuevos mensajes.
+No se necesita que Mosquitto tenga WebSockets: Node recibe MQTT por TCP.
+La web y el simulador comparten los mismos IDs en tramos.json (mapa original
+incluido en public/index.html). Para añadir calles hay que actualizar ambos.
+
+OTRO BROKER (CMD de Windows, antes de ejecutar ambos procesos)
+set MQTT_URL=mqtt://DIRECCION_DEL_BROKER:1883
+set MQTT_USERNAME=usuario
+set MQTT_PASSWORD=tu_clave
+Puedes cambiar MQTT_TOPIC_PREFIX en ambos procesos si el equipo usa otro topic.
+No guardes las contraseñas en el código ni las subas a GitHub.
+
+ARCHIVOS
+public/index.html: tu web con el diseño y las imágenes originales.
+tramos.json: catálogo de los 13 tramos y geometrías originales.
+simulador.mjs: publica estados usando IDs reales de tramos.
+ocupacion.mjs: contrato común y validación de mensajes.
+server.mjs: recibe MQTT y transmite los cambios a la web con SSE.
+test/: comprobaciones del catálogo, mensajes, modo manual y transmisión SSE.
+
+COMPROBAR
+npm ci
+npm test
+
+IMPORTANTE
+Esta entrega es una carpeta completa y sustituye al antiguo iniciador estático.
+Copiar solo index.html al servidor anterior no conecta MQTT.
+Necesitas Internet para instalar dependencias y cargar Leaflet/OpenStreetMap.
+El servidor escucha solo en este ordenador (127.0.0.1). Para una web pública
+hace falta un backend accesible por HTTPS con soporte SSE; Vercel estático no
+puede ejecutar por sí solo este proceso MQTT persistente.
+No se ha modificado GitHub ni la web pública. El mapa conserva las ubicaciones
+originales; el indicador libre/ocupado representa el estado recibido del tramo,
+no el número exacto de plazas libres de toda la calle.

@@ -1,0 +1,89 @@
+name: CarPark · pruebas y copias
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Pruebas de CarPark
+    if: |
+      (github.event_name == 'pull_request' && github.head_ref != 'main') ||
+      (github.event_name == 'workflow_dispatch' && github.ref_type == 'branch' && github.ref_name != 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Arrancar el laboratorio con datos ficticios
+        run: |
+          ./lab-backups/scripts/lab.sh configure
+          ./lab-backups/scripts/lab.sh up
+      - name: Ejecutar las pruebas dentro de Docker
+        run: |
+          docker compose --project-name carpark-backup-lab \
+            --env-file lab-backups/.env -f lab-backups/docker-compose.yml \
+            run --rm -T --no-deps --entrypoint node \
+            --volume "$GITHUB_WORKSPACE/test:/app/test:ro" \
+            --volume "$GITHUB_WORKSPACE/simulador-mqtt:/app/simulador-mqtt:ro" \
+            api --test
+      - name: Verificar la web y la base de datos del laboratorio
+        run: |
+          curl --fail --silent --show-error http://127.0.0.1:3101/ --output /dev/null
+          ./lab-backups/scripts/lab.sh backup-local
+          ./lab-backups/scripts/lab.sh verify
+
+  backup:
+    name: Copia verificable del repositorio
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Guardar ramas, etiquetas e historial
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/carpark-backup"
+          snapshot="$RUNNER_TEMP/carpark-snapshot.git"
+          git clone --mirror --no-local . "$snapshot"
+
+          while IFS=' ' read -r ref sha; do
+            branch="${ref#refs/remotes/origin/}"
+            [[ "$branch" == HEAD ]] && continue
+            git -C "$snapshot" update-ref "refs/heads/$branch" "$sha"
+          done < <(git for-each-ref --format='%(refname) %(objectname)' refs/remotes/origin)
+
+          git -C "$snapshot" symbolic-ref HEAD refs/heads/main
+          bundle="$RUNNER_TEMP/carpark-backup/carpark.bundle"
+          git -C "$snapshot" bundle create "$bundle" HEAD --branches --tags
+          git -C "$snapshot" bundle verify "$bundle"
+          restored="$RUNNER_TEMP/carpark-restore.git"
+          git clone --mirror "$bundle" "$restored"
+          git -C "$restored" fsck --full
+          diff -u \
+            <(git -C "$snapshot" for-each-ref refs/heads refs/tags) \
+            <(git -C "$restored" for-each-ref refs/heads refs/tags)
+
+          printf '%s\n' 'Para restaurar localmente tras extraer el ZIP:' \
+            '`git clone -b main carpark.bundle carpark-recuperado`' \
+            'Descarga una copia y guárdala también fuera de GitHub.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Publicar copia descargable
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: carpark-repositorio-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/carpark-backup/carpark.bundle
+          if-no-files-found: error
+          retention-days: 30
