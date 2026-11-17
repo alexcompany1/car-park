@@ -1,6 +1,6 @@
 # CarPark
 
-CarPark muestra los tramos de aparcamiento de la zona azul de El Masnou. El mapa consulta la API de Express, que lee los datos de Supabase. Los 13 tramos representan ubicaciones publicadas por SUMEM. Su ocupación aún es desconocida.
+CarPark muestra los tramos de aparcamiento de la zona azul de El Masnou. El mapa consulta la API de Express, que lee los datos de Supabase. Los 13 tramos representan ubicaciones publicadas por SUMEM. La disponibilidad depende de los datos recibidos por la API; la demo visual se identifica por separado.
 
 [Ver la web publicada en Vercel](https://car-park-snowy.vercel.app/#mapa)
 
@@ -33,9 +33,14 @@ Abre [CarPark en local](http://localhost:3000/). El mapa usa Leaflet y OpenStree
 
 ## Pruebas y documentación
 
-Ejecuta `npm test` para comprobar la API y las rutas. En el mapa, el botón **Actualizar** vuelve a consultar la API y los favoritos se guardan en el navegador.
+Ejecuta `npm test` para comprobar la API y las rutas. La web consulta `/api/sitios` automáticamente cada 5 segundos. El modo **Demo visual** permite probar cambios sin escribir en la base de datos. El mapa usa marcadores P con distintivos de estado, sin dibujar las líneas de los tramos. Los favoritos se guardan con consentimiento.
+
+La copia completa de MQTT/SSE para pruebas locales está en [CarPark-MQTT-Local](CarPark-MQTT-Local/LEEME.txt). Requiere Node.js y Mosquitto; no se ejecuta como un proceso persistente dentro de Vercel.
+
+[Notas de integración del modelo visual](docs/pau-modelo-visual.md).
 
 - [Coordinación del sprint 2](docs/COORDINACION_SPRINT_2.txt)
 - [Tramos de El Masnou, fuentes e importación](docs/el-masnou-ubicaciones-reales.md)
 - [Prototipo del sprint 1](docs/archivo/frontend-sprint-1.html). Se conserva como referencia junto con sus recursos en `css/` y `js/`.
 - [Notas del despliegue inicial](docs/archivo/notas-despliegue-inicial.txt)
+

@@ -1,0 +1,104 @@
+CARPARK - COORDINACION DEL SPRINT 2
+Fecha: 27/10/2026
+
+OBJETIVO Y ALCANCE
+Esta es una propuesta de coordinacion para Alex, Pau y Marc, que debeis
+contrastar con los criterios de entrega del profesor. No sustituye la rubrica.
+Conviene hacer una prueba conjunta en este sprint para comprobar que las
+partes encajan. No hace falta tener toda la aplicacion terminada.
+Integrar codigo en main no significa que frontend, MQTT y base de datos
+ya esten conectados.
+
+QUE ESTA HECHO
+- Servidor Node.js con Express.
+- GET /api/sitios devuelve dos plazas simuladas: una libre y otra ocupada.
+- En el servidor local, / redirige a /api/sitios.
+- Pruebas locales de la API, errores 404 y rutas anteriores.
+- Instrucciones de arranque en docs/alex-sprint2-backend.md.
+Pendiente: conexion a Supabase/PostgreSQL, recepcion MQTT y conexion
+con el frontend. No se ha verificado el despliegue de esta version en Vercel.
+
+REPARTO PROPUESTO
+Alex - backend y base de datos:
+1. Mantener GET /api/sitios y el formato acordado.
+2. Comprobar la conexion a Supabase/PostgreSQL con una consulta de prueba.
+3. Acordar con Marc como recibir sus mensajes MQTT.
+4. Cuando se integre MQTT, validar id y estado antes de actualizar una plaza.
+5. Documentar como arrancar y probar su parte. No subir claves al repositorio.
+
+Pau - frontend y Scrum Master:
+1. Preparar una vista sencilla de las plazas y consultar GET /api/sitios.
+2. Usar id para identificar cada plaza y estado para indicar disponibilidad.
+3. Mostrar un aviso si falla la consulta o no hay plazas.
+4. Para el mapa, acordar coordenadas ficticias con el equipo: la API actual
+   todavia no incluye latitud y longitud. Una lista sirve de primera prueba.
+5. Coordinar el tablero, la prueba conjunta y las evidencias de la Review.
+
+Marc - IoT simulado:
+1. Preparar un simulador que publique libre/ocupado por MQTT.
+2. Acordar con Alex el broker, puerto, topic e identificadores antes de conectar.
+3. Propuesta de topic: carpark/sitios/estado.
+4. Propuesta de mensaje: {"id":1,"estado":"ocupado"}.
+5. Demostrar al menos un cambio a ocupado y otro a libre.
+El topic y el mensaje MQTT son propuestas; todavia no estan implementados
+en este backend.
+
+CONTRATO ACTUAL PARA EL FRONTEND
+Peticion: GET /api/sitios
+Respuesta HTTP 200:
+{
+  "sitios": [
+    {"id":1,"estado":"libre","mensaje":"La plaza 1 esta disponible"},
+    {"id":2,"estado":"ocupado","mensaje":"La plaza 2 no esta disponible"}
+  ]
+}
+El servidor real devuelve el texto con tildes.
+Estados admitidos: "libre" y "ocupado", siempre en minusculas.
+id es un numero estable compartido por frontend, backend y simulador.
+El frontend debe usar estado, no interpretar el texto de mensaje.
+La respuesta sin plazas sera {"sitios":[]}.
+Cualquier cambio de campos o tipos debe acordarse antes con el equipo.
+
+COMO JUNTAR EL TRABAJO ESTE SPRINT
+1. Todos parten de main actualizado y trabajan en su propia rama.
+   Guardar los cambios propios antes de cambiar de rama.
+   git switch main
+   git pull --ff-only origin main
+   git switch <rama-personal>
+   git merge main
+   Resolver los conflictos juntos si dos personas han editado el mismo archivo.
+2. Instalar dependencias con npm ci y arrancar el backend con npm start.
+3. Primera integracion: Pau consulta la API y muestra las dos plazas.
+   Si frontend y backend usan puertos distintos, acordar un proxy de desarrollo
+   o configurar CORS para el origen concreto. CORS no esta configurado ahora.
+   localhost apunta al ordenador de cada uno: para probar entre portatiles,
+   usar la IP del equipo que ejecuta el backend y comprobar la conexion de red.
+4. Segunda integracion, si hay tiempo: Alex recibe el mensaje MQTT de Marc,
+   actualiza el estado y la siguiente consulta de Pau refleja el cambio.
+   GET /api/sitios solo consulta: publicar MQTT no cambiara los datos hasta
+   que Alex implemente la suscripcion y la actualizacion.
+   Para la primera demo basta volver a consultar; tiempo real con Socket.io
+   puede quedar para una tarea posterior.
+5. Comprobar tambien la consulta a la base de datos. Conectarla al flujo
+   completo sera un paso adicional, no algo que ya haga esta API.
+6. Antes de unir cada rama a main, revisar el cambio, ejecutar npm test
+   y probarlo con los otros componentes. Usar una pull request para que
+   otro companero pueda revisarlo. No reemplazar archivos de otros sin revisar.
+
+CRITERIO PROPUESTO DE CIERRE
+Minimo recomendable: backend y frontend conectados, simulador MQTT probado
+por separado, prueba de conexion a la base de datos y evidencias claras de
+lo que funciona y lo que queda pendiente.
+Objetivo ampliado: simulador -> MQTT -> backend -> consulta de la API ->
+frontend, con un cambio visible de libre a ocupado y de ocupado a libre.
+Si no se llega, registrar el bloqueo y la tarea pendiente para el siguiente
+sprint. No presentar datos fijos como una integracion MQTT funcional.
+
+EVIDENCIAS Y DOCUMENTACION
+- Captura de la respuesta de la API y de la vista del frontend.
+- Registro de un mensaje MQTT y, si se integra, del cambio recibido.
+- Resultado de la prueba de base de datos, sin credenciales visibles.
+- npm test sin errores.
+- Comparativas tecnologicas que falten, tareas realizadas y pendientes.
+- Review y retrospectiva: cada persona explica su parte y la conexion
+  con las demas.
