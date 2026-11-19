@@ -101,6 +101,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #2b8cff;outline-offset:4p
  <section class="features" id="como-funciona"><div class="shell"><div class="center-head"><span class="section-overline">ASÍ DE SENCILLO</span><h2>Cómo usar CarPark</h2><p>Busca un tramo, consulta sus datos y abre la ruta para llegar.</p></div><div class="feature-grid"><div class="feature"><span class="feature-icon">⌕</span><h3>1. Busca en El Masnou</h3><p>Pulsa «Ver mapa» y escribe el nombre de una calle en el buscador. Verás los tramos que coinciden tanto en la lista como en el mapa real de OpenStreetMap. Puedes acercar el mapa con + y alejarlo con −.</p></div><div class="feature"><span class="feature-icon">⌖</span><h3>2. Selecciona un tramo</h3><p>Pulsa un marcador de aparcamiento o una tarjeta de la lista para abrir sus detalles. «Sin datos de ocupación» significa que no sabemos si hay sitio libre. Un tramo representa una parte de una calle, no una plaza individual.</p></div><div class="feature"><span class="feature-icon">↗</span><h3>3. Consulta la ruta</h3><p>En el detalle, pulsa «Cómo llegar» para abrir la ubicación del tramo en Google Maps y calcular tu ruta. También puedes pulsar «Guardar» para marcarlo como favorito en este navegador. CarPark no reserva plazas ni garantiza disponibilidad.</p></div></div></div></section>
  <section class="shell contact" id="contacto"><div><span class="section-overline">PROYECTO CARPARK</span><h2>Una forma más inteligente de aparcar.</h2><p>Ubicaciones de estacionamiento publicadas por SUMEM. Puedes consultar los tramos y guardar favoritos; los datos del proyecto se consultan automáticamente. La demo visual está identificada como simulación y no representa mediciones reales.</p></div><a href="#mapa" class="btn primary">Ver mapa</a></section>
 </main>
+<style>#cuenta [hidden] { display: none; }</style>
+<section id="cuenta" class="shell" aria-labelledby="cuentaTitulo" style="padding-block:2rem">
+ <h2 id="cuentaTitulo">Tu cuenta</h2>
+ <div class="hero-actions">
+  <button class="btn outline" type="button" data-provider="google" hidden>Continuar con Google</button>
+  <button class="btn outline" type="button" data-provider="azure" hidden>Continuar con Microsoft</button>
+  <button class="btn outline" type="button" data-provider="apple" hidden>Continuar con Apple</button>
+  <button class="btn outline" type="button" id="cerrarSesion" hidden>Cerrar sesión</button>
+ </div>
+ <p id="authStatus" role="status">Comprobando opciones de acceso…</p>
+</section>
 <footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Fuente: SUMEM / Google My Maps · Datos del proyecto y demo visual</span></div><div class="shell legal-links" aria-label="Información legal"><button type="button" class="legal-link" data-legal="privacy">Privacidad</button><button type="button" class="legal-link" data-legal="cookies">Política de cookies</button><button type="button" class="legal-link" data-legal="settings">Configurar cookies</button></div></footer>
 
 <aside class="cookie-banner" id="cookieBanner" aria-label="Cookies y privacidad" hidden>
@@ -328,20 +339,88 @@ $('favoriteBtn').addEventListener('click',()=>{if(!selected)return;favorites=fav
 $('menuBtn').addEventListener('click',()=>{const open=$('navlinks').classList.toggle('open');$('menuBtn').setAttribute('aria-expanded',String(open));});
 document.querySelectorAll('.navlinks a').forEach(link=>link.addEventListener('click',()=>{$('navlinks').classList.remove('open');$('menuBtn').setAttribute('aria-expanded','false');}));
 document.querySelectorAll('[data-legal]').forEach(button=>button.addEventListener('click',()=>openLegal(button.dataset.legal)));
-$('closeLegal').addEventListener('click',()=>$('legalDialog').close());
-$('acceptCookies').addEventListener('click',()=>choosePrivacy(true));
-$('rejectCookies').addEventListener('click',()=>choosePrivacy(false));
-$('rejectSettings').addEventListener('click',()=>choosePrivacy(false));
-$('saveCookies').addEventListener('click',()=>choosePrivacy($('allowFavorites').checked));
-$('clearPrivacy').addEventListener('click',()=>{
+$('closeLegal')?.addEventListener('click', () => $('legalDialog')?.close());
+$('acceptCookies')?.addEventListener('click', () => choosePrivacy(true));
+$('rejectCookies')?.addEventListener('click', () => choosePrivacy(false));
+$('rejectSettings')?.addEventListener('click', () => choosePrivacy(false));
+$('saveCookies')?.addEventListener('click', () => choosePrivacy($('allowFavorites')?.checked ?? false));
+$('clearPrivacy')?.addEventListener('click',()=>{
  try{localStorage.removeItem(consentKey);localStorage.removeItem('carpark_favorites');}catch{}
- privacyChoice=null;favorites=[];render();$('legalDialog').close();$('cookieBanner').hidden=false;
+ privacyChoice=null;favorites=[];render();
+ $('legalDialog')?.close();
+ const banner=$('cookieBanner');
+ if(banner)banner.hidden=false;
  toast('Datos locales de CarPark eliminados');
 });
-$('cookieBanner').hidden=privacyChoice!==null;
-
+if ($('cookieBanner')) {
+  $('cookieBanner').hidden = privacyChoice !== null;
+}
 loadSpots();
 if(location.protocol==='file:'||new URLSearchParams(location.search).get('demo')==='1')startDemo();else connectLive();
 
+</script>
+<script type="module">
+const status = document.querySelector('#authStatus');
+const buttons = [...document.querySelectorAll('[data-provider]')];
+const signOut = document.querySelector('#cerrarSesion');
+async function setupAuth() {
+  const configResponse = await fetch('/api/auth-config');
+  if (!configResponse.ok) throw new Error('Configuración no disponible');
+  const { url, publishableKey } = await configResponse.json();
+  const settingsResponse = await fetch(new URL('/auth/v1/settings', url), {
+    headers: { apikey: publishableKey },
+  });
+  if (!settingsResponse.ok) throw new Error('Proveedores no disponibles');
+  const { external } = await settingsResponse.json();
+  const active = buttons.filter(button => external?.[button.dataset.provider] === true);
+  if (!active.length) {
+    status.textContent = 'El inicio de sesión aún no está habilitado.';
+    return;
+  }
+
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/+esm');
+  const client = createClient(url, publishableKey, { auth: { flowType: 'pkce' } });
+  const render = session => {
+    active.forEach(button => { button.hidden = Boolean(session); });
+    signOut.hidden = !session;
+    status.textContent = session ? 'Sesión iniciada.' : 'Elige una cuenta para iniciar sesión.';
+  };
+  client.auth.onAuthStateChange((_event, session) => render(session));
+
+  const returnUrl = new URL(location.href);
+  const authError = returnUrl.searchParams.has('error') || returnUrl.searchParams.has('error_code')
+    || new URLSearchParams(returnUrl.hash.slice(1)).has('error');
+  const { data, error } = await client.auth.getSession();
+  render(data.session);
+  if (error || authError) status.textContent = 'No se pudo completar el inicio de sesión.';
+
+  active.forEach(button => {
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      const provider = button.dataset.provider;
+      try {
+        const { error } = await client.auth.signInWithOAuth({
+          provider,
+          options: { redirectTo: new URL('/', location.origin).href, ...(provider === 'azure' ? { scopes: 'email' } : {}) },
+        });
+        if (error) throw error;
+      } catch {
+        status.textContent = 'No se pudo abrir el proveedor de inicio de sesión.';
+        button.disabled = false;
+      }
+    });
+  });
+  signOut.addEventListener('click', async () => {
+    try {
+      const { error } = await client.auth.signOut({ scope: 'local' });
+      if (error) throw error;
+    } catch {
+      status.textContent = 'No se pudo cerrar la sesión.';
+    }
+  });
+}
+setupAuth().catch(() => {
+  status.textContent = 'El inicio de sesión no está disponible en este momento.';
+});
 </script>
 </body></html>
