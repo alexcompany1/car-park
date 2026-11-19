@@ -165,3 +165,120 @@ Para detener el broker:
 docker compose -f simulador-mqtt/compose.yaml down
 ```
 
+## Integración MQTT con el backend y Supabase — Sprint 3
+
+### Descripción
+
+Se ha integrado el simulador MQTT desarrollado por Marc con el backend Node.js de Carpark.
+
+Esta integración permite actualizar automáticamente los estados de ocupación de los 13 tramos de zona azul de El Masnou y registrar los cambios en Supabase.
+
+El proceso funciona de la siguiente manera:
+
+1. El simulador MQTT publica un mensaje indicando el identificador del tramo y su estado.
+2. El broker Mosquitto, ejecutado mediante Docker, distribuye el mensaje.
+3. El backend recibe y valida la información mediante `src/mqtt-listener.js`.
+4. Supabase actualiza el campo `estado_actual` de la tabla `plazas`.
+5. La función SQL `registrar_estado_mqtt` guarda los cambios en `historico_ocupacion`.
+6. El frontend consulta la API y muestra el nuevo estado en el mapa de Carpark.
+
+### Requisitos
+
+- Node.js 20 o superior.
+- Docker y Docker Compose.
+- Acceso al proyecto Supabase.
+- Archivo `.env` configurado correctamente.
+
+### Configuración del entorno
+
+El archivo `.env` debe contener las variables necesarias para conectar el backend:
+
+```dotenv
+SUPABASE_URL=URL_DEL_PROYECTO
+SUPABASE_PUBLISHABLE_KEY=CLAVE_PUBLICA
+SUPABASE_SERVICE_ROLE_KEY=CLAVE_PRIVADA_SERVIDOR
+MQTT_URL=mqtt://127.0.0.1:1883
+MQTT_WRITE_ENABLED=false
+```
+
+Para realizar pruebas autorizadas de escritura en Supabase, se puede establecer temporalmente `MQTT_WRITE_ENABLED=true`.
+
+**Seguridad:** nunca subir el archivo `.env` ni las claves privadas al repositorio de GitHub.
+
+### Iniciar Carpark
+
+Desde la carpeta principal del proyecto, instalar las dependencias:
+
+```bash
+npm ci
+```
+
+Para iniciar automáticamente Mosquitto, Express y el receptor MQTT en Linux:
+
+```bash
+./iniciar-demo.sh
+```
+
+La aplicación estará disponible en:
+
+http://localhost:3000
+
+### Simular cambios de ocupación
+
+Abrir una segunda terminal y acceder a la carpeta del simulador:
+
+```bash
+cd simulador-mqtt
+npm ci
+```
+
+Para indicar que Carrer Navarra está ocupado:
+
+```bash
+npm start -- --id EM-ZB-NAVARRA --estado ocupado
+```
+
+Para marcarlo como libre:
+
+```bash
+npm start -- --id EM-ZB-NAVARRA --estado libre
+```
+
+El backend admite los 13 identificadores definidos en `src/data/tramos-el-masnou.json`.
+
+### Registro del historial
+
+Cada cambio real de estado se registra en la tabla `historico_ocupacion`, asociándolo al dispositivo MQTT correspondiente.
+
+La función `registrar_estado_mqtt` permite actualizar el estado actual y registrar el historial dentro de una misma transacción.
+
+Si un tramo ya está ocupado y recibe nuevamente el estado `ocupado`, no se genera otro registro de cambio.
+
+### Comprobación del funcionamiento
+
+Para verificar los datos de un tramo en Supabase:
+
+```sql
+SELECT id, estado_actual, ultima_actualizacion
+FROM public.plazas
+WHERE id = 'EM-ZB-NAVARRA';
+```
+
+Para consultar su historial:
+
+```sql
+SELECT id, plaza_id, dispositivo_id, ocupada, fecha_hora
+FROM public.historico_ocupacion
+WHERE plaza_id = 'EM-ZB-NAVARRA'
+ORDER BY fecha_hora DESC;
+```
+
+### Limitaciones actuales
+
+La integración MQTT se ejecuta actualmente en un entorno local.
+
+Aunque la web está publicada en Vercel, el broker Mosquitto y el receptor MQTT deben permanecer ejecutándose para procesar nuevos mensajes.
+
+Para utilizar MQTT sin depender de un ordenador local, será necesario desplegar estos componentes en un servidor permanente y configurar autenticación, permisos y conexiones seguras.
+
+Al finalizar las pruebas, se recomienda establecer `MQTT_WRITE_ENABLED=false` y reiniciar el receptor.

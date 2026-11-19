@@ -112,7 +112,43 @@ a:focus-visible,button:focus-visible{outline:3px solid #2b8cff;outline-offset:4p
  </div>
  <p id="authStatus" role="status">Comprobando opciones de acceso…</p>
 </section>
-<footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Fuente: SUMEM / Google My Maps · Ocupación desconocida</span></div></footer>
+<footer><div class="shell footer-inner"><span class="footer-brand">▰ CarPark</span><span>© 2026 CarPark · Proyecto académico</span><span>Fuente: SUMEM / Google My Maps · Datos del proyecto y demo visual</span></div><div class="shell legal-links" aria-label="Información legal"><button type="button" class="legal-link" data-legal="privacy">Privacidad</button><button type="button" class="legal-link" data-legal="cookies">Política de cookies</button><button type="button" class="legal-link" data-legal="settings">Configurar cookies</button></div></footer>
+
+<aside class="cookie-banner" id="cookieBanner" aria-label="Cookies y privacidad" hidden>
+ <div class="cookie-copy"><strong>Tu privacidad, tú decides</strong><p>No añadimos cookies de publicidad ni analítica. Guardamos tu elección y, si lo aceptas, tus favoritos en este navegador. El mapa carga recursos de OpenStreetMap y Leaflet desde servicios externos. <button class="cookie-inline" data-legal="privacy">Privacidad</button> · <button class="cookie-inline" data-legal="cookies">Más sobre cookies</button>.</p></div>
+ <div class="cookie-actions"><button class="cookie-action" id="acceptCookies">Aceptar preferencias</button><button class="cookie-action" id="rejectCookies">Rechazar opcionales</button><button class="cookie-action cookie-config" data-legal="settings">Configurar</button></div>
+</aside>
+<dialog class="legal-dialog" id="legalDialog" aria-labelledby="legalTitle">
+ <div class="legal-top"><h2 id="legalTitle">Privacidad</h2><button type="button" class="legal-close" id="closeLegal" aria-label="Cerrar información legal">×</button></div>
+ <div class="legal-body">
+  <section id="privacyPanel" hidden>
+   <p class="legal-date">Información de esta copia local · Actualizada el 10 de noviembre de 2026</p>
+   <h3>Sobre CarPark</h3><p>CarPark es un proyecto académico para consultar tramos de estacionamiento en El Masnou. Esta copia funciona en tu ordenador mediante un servidor local y no incluye registro, formularios de contacto ni pagos. El servidor consulta Supabase a través de /api/sitios. La página vuelve a consultar automáticamente los estados. La demo se ejecuta únicamente en el navegador y no escribe en Supabase.</p>
+   <h3>Qué información se utiliza</h3><p>Las búsquedas y los filtros se procesan en tu navegador. No solicitamos tu nombre, correo ni ubicación GPS. Los favoritos contienen identificadores de tramos y solo se conservan entre visitas si activas las preferencias opcionales.</p>
+   <h3>Recursos y enlaces externos</h3><p>Para mostrar el mapa, tu navegador se conecta a OpenStreetMap; para cargar Leaflet, a unpkg. Estos proveedores reciben los datos técnicos de la conexión, como la dirección IP, el navegador y el recurso solicitado. La selección de calles en el mapa determina qué imágenes se solicitan. Estas conexiones se realizan al cargar el mapa y no dependen de la opción de guardar favoritos.</p><p>Al pulsar «Cómo llegar», se abre Google Maps con las coordenadas del tramo seleccionado. Google aplica sus propias condiciones y política de privacidad. No enviamos una posición GPS tuya.</p>
+   <p><a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">Privacidad de OpenStreetMap</a> · <a href="https://unpkg.com" target="_blank" rel="noopener noreferrer">Información de unpkg</a> · <a href="https://policies.google.com/privacy?hl=es" target="_blank" rel="noopener noreferrer">Privacidad de Google</a></p>
+   <h3>Conservación y control</h3><p>Tu elección sobre preferencias caduca a los 180 días y se comprueba al abrir la web. Los favoritos se mantienen hasta que los elimines, rechaces las preferencias o borres los datos del navegador. Puedes cambiar tu elección en «Configurar cookies», al pie de la página.</p><p>Sin permiso para conservar favoritos, puedes seguir guardándolos temporalmente mientras esta página permanezca abierta. No instalamos herramientas de seguimiento ni creamos perfiles publicitarios.</p>
+   <h3>Cómo eliminar tus datos locales</h3><p>Abre «Configurar cookies» y pulsa «Borrar mis datos locales» para eliminar los favoritos y la elección guardada de CarPark. También puedes borrar los datos de este sitio desde tu navegador. Las peticiones ya enviadas a proveedores externos no se eliminan con esta acción.</p>
+  </section>
+  <section id="cookiesPanel" hidden>
+   <p class="legal-date">Cookies y almacenamiento del navegador · 10 de noviembre de 2026</p>
+   <p>Esta copia no crea cookies HTTP propias. Utiliza <strong>localStorage</strong>, un almacenamiento del navegador distinto de las cookies, para estas funciones:</p>
+   <div class="legal-table-wrap"><table class="legal-table"><thead><tr><th>Elemento</th><th>Finalidad</th><th>Duración</th></tr></thead><tbody><tr><td><code>carpark_privacy_v1</code></td><td>Recordar si permites conservar favoritos. Se guarda al elegir.</td><td>180 días; caducidad comprobada al abrir la web.</td></tr><tr><td><code>carpark_favorites</code></td><td>Conservar los tramos favoritos. Opcional, solo si lo permites.</td><td>Hasta su eliminación o la retirada del permiso; se retira al comprobar una elección caducada.</td></tr></tbody></table></div>
+   <p>No añadimos servicios de publicidad o medición de audiencia. Los servicios externos del mapa y de la librería reciben peticiones de red y pueden utilizar sus propios mecanismos técnicos o de caché, sujetos a sus políticas. «Rechazar opcionales» desactiva la conservación de favoritos; no bloquea las conexiones necesarias para mostrar el mapa.</p>
+   <h3>Aceptar, rechazar o cambiar</h3><p>Puedes aceptar o rechazar las preferencias desde el aviso inicial, sin impedir la consulta del mapa. Reabre los ajustes desde «Configurar cookies» para cambiar la decisión. Si tu navegador impide el almacenamiento, la elección solo se aplica mientras la página esté abierta.</p>
+   <button class="cookie-action" data-legal="settings">Abrir configuración</button>
+  </section>
+  <section id="settingsPanel" hidden>
+   <p>Elige qué puede conservar CarPark en este navegador. No usamos publicidad ni analítica.</p>
+   <label class="cookie-setting"><input type="checkbox" checked disabled><span><strong>Recordar tu elección</strong><small>Necesario para aplicar tus preferencias. No identifica a una persona ni se envía a nuestro servidor.</small></span></label>
+   <label class="cookie-setting"><input type="checkbox" id="allowFavorites"><span><strong>Conservar favoritos entre visitas</strong><small>Opcional. Si lo desactivas, se borran los favoritos guardados y los nuevos solo duran mientras esta página está abierta.</small></span></label>
+   <p class="legal-note">El mapa y sus recursos externos se cargan para prestar el servicio. Esta selección controla el almacenamiento local de favoritos.</p>
+   <div class="legal-bottom"><button class="cookie-action" id="saveCookies">Guardar selección</button><button class="cookie-action" id="rejectSettings">Rechazar opcionales</button></div>
+   <div class="legal-bottom"><button class="cookie-action" id="clearPrivacy">Borrar mis datos locales</button></div>
+  </section>
+ </div>
+</dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
