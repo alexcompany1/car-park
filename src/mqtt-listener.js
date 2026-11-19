@@ -78,15 +78,17 @@ cliente.on('message', async (topic, mensaje) => {
       ? 'free'
       : 'occupied';
 
-    const { data, error } = await supabase
-      .from('plazas')
-      .update({
-        estado_actual: nuevoEstado,
-        ultima_actualizacion: new Date().toISOString()
-      })
-      .eq('id', datos.id)
-      .select('id, estado_actual');
+const { data, error } = await supabase.rpc(
+  'registrar_estado_mqtt',
+  {
+    p_plaza_id: datos.id,
+    p_estado: datos.estado
+  }
+);
 
+if (error) throw error;
+
+console.log('Resultado MQTT:', data);
     if (error) throw error;
 
     if (data.length !== 1) {
