@@ -2,11 +2,13 @@
 // No requiere hardware ni conexión con Supabase.
 
 const ESTADOS = ['libre', 'ocupado'];
+const TRAMOS = require('../src/data/tramos-el-masnou.json');
+const TRAMOS_VALIDOS = new Set(Object.keys(TRAMOS));
 
 function crearMensaje(id, estado) {
-  if (typeof id !== 'string' || !/^[A-Za-z0-9_-]+$/.test(id)) {
-    throw new Error('El identificador debe ser texto sin espacios (ejemplo: CP-001).');
-  }
+if (typeof id !== 'string' || !TRAMOS_VALIDOS.has(id)) {
+  throw new Error('El identificador no corresponde a un tramo real de El Masnou.');
+}
   if (!ESTADOS.includes(estado)) {
     throw new Error('El estado solo puede ser "libre" u "ocupado".');
   }
@@ -27,7 +29,7 @@ function leerConfiguracion(argumentos, entorno) {
     opciones[clave] = argumentos[++i];
   }
 
-  const id = opciones['--id'] || entorno.PLAZA_ID || 'CP-001';
+  const id = opciones['--id'] || entorno.PLAZA_ID || 'EM-ZB-PUERTO-RICO';
   const estado = opciones['--estado'] || null;
   const intervaloTexto = opciones['--intervalo'] || entorno.INTERVALO_MS || '5000';
   const intervalo = Number(intervaloTexto);
